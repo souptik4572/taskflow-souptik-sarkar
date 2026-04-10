@@ -107,7 +107,7 @@ export default function ProjectDetailPage() {
 
   if (pageError || !project) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         <Navbar />
         <main className="max-w-6xl mx-auto px-4 py-8">
           <EmptyState
@@ -128,7 +128,7 @@ export default function ProjectDetailPage() {
   })
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Back link */}
@@ -141,15 +141,15 @@ export default function ProjectDetailPage() {
         </button>
 
         {/* Project header */}
-        <div className="flex items-start justify-between gap-4 mb-2">
-          <div>
-            <h1 className="text-2xl font-bold">{project.name}</h1>
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-2">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl font-bold truncate">{project.name}</h1>
             {project.description && (
               <p className="text-muted-foreground mt-1">{project.description}</p>
             )}
           </div>
           {isOwner && (
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-2 sm:shrink-0">
               <Button variant="outline" size="sm" onClick={() => setEditProjectOpen(true)}>
                 <Pencil className="w-3.5 h-3.5" />
                 Edit
@@ -169,57 +169,60 @@ export default function ProjectDetailPage() {
         )}
 
         {/* Toolbar: filters + view toggle + add button */}
-        <div className="flex flex-wrap items-center gap-3 mt-6 mb-4">
-          {/* Status filter — hidden in board mode (board shows all columns) */}
-          {viewMode === 'list' && (
-            <Select value={statusFilter || 'all'} onValueChange={(v) => setStatusFilter(v === 'all' ? '' : v)}>
-              <SelectTrigger className="w-36">
-                <SelectValue placeholder="All statuses" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All statuses</SelectItem>
-                <SelectItem value="todo">To Do</SelectItem>
-                <SelectItem value="in_progress">In Progress</SelectItem>
-                <SelectItem value="done">Done</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 mt-6 mb-4">
+          {/* Filters + view toggle — scroll horizontally on very small screens */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Status filter — hidden in board mode (board shows all columns) */}
+            {viewMode === 'list' && (
+              <Select value={statusFilter || 'all'} onValueChange={(v) => setStatusFilter(v === 'all' ? '' : v)}>
+                <SelectTrigger className="w-32 sm:w-36">
+                  <SelectValue placeholder="All statuses" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All statuses</SelectItem>
+                  <SelectItem value="todo">To Do</SelectItem>
+                  <SelectItem value="in_progress">In Progress</SelectItem>
+                  <SelectItem value="done">Done</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
 
-          {projectMembers.length > 0 && (
-            <Select value={assigneeFilter || 'all'} onValueChange={(v) => setAssigneeFilter(v === 'all' ? '' : v)}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="All assignees" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All assignees</SelectItem>
-                {projectMembers.map((m) => (
-                  <SelectItem key={m.id} value={m.id}>
-                    {m.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
+            {projectMembers.length > 0 && (
+              <Select value={assigneeFilter || 'all'} onValueChange={(v) => setAssigneeFilter(v === 'all' ? '' : v)}>
+                <SelectTrigger className="w-32 sm:w-40">
+                  <SelectValue placeholder="All assignees" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All assignees</SelectItem>
+                  {projectMembers.map((m) => (
+                    <SelectItem key={m.id} value={m.id}>
+                      {m.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
 
-          {/* View toggle */}
-          <div className="flex items-center gap-1 rounded-md border border-border p-0.5">
-            <button
-              onClick={() => setViewMode('list')}
-              className={`p-1.5 rounded-sm transition-colors ${viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
-              aria-label="List view"
-            >
-              <LayoutList className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setViewMode('board')}
-              className={`p-1.5 rounded-sm transition-colors ${viewMode === 'board' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
-              aria-label="Board view"
-            >
-              <Columns className="w-4 h-4" />
-            </button>
+            {/* View toggle */}
+            <div className="flex items-center gap-1 glass rounded-lg p-0.5">
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-1.5 rounded-sm transition-colors ${viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+                aria-label="List view"
+              >
+                <LayoutList className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode('board')}
+                className={`p-1.5 rounded-sm transition-colors ${viewMode === 'board' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+                aria-label="Board view"
+              >
+                <Columns className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          <Button className="ml-auto" onClick={() => setAddTaskOpen(true)}>
+          <Button className="w-full sm:w-auto sm:ml-auto" onClick={() => setAddTaskOpen(true)}>
             <Plus className="w-4 h-4" />
             Add Task
           </Button>

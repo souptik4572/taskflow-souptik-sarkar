@@ -10,7 +10,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <nav className="bg-card border-b border-border sticky top-0 z-10">
+    <nav className="glass-navbar sticky top-0 z-10">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link to="/projects" className="flex items-center gap-2 font-bold text-lg">
           <CheckSquare className="w-5 h-5 text-primary" />
@@ -52,7 +52,7 @@ export function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="sm:hidden border-t border-border px-4 py-3 flex flex-col gap-3 bg-card">
+        <div className="sm:hidden border-t border-white/20 dark:border-white/10 px-4 py-3 flex flex-col gap-3 glass-navbar">
           <button
             onClick={toggleTheme}
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"

@@ -13,7 +13,7 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
   return (
     <div
       onClick={onClick}
-      className="bg-white border border-border rounded-lg p-4 cursor-pointer hover:border-primary/50 hover:shadow-sm transition-all"
+      className="glass rounded-2xl p-4 cursor-pointer hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
     >
       <div className="flex items-start justify-between gap-2">
         <h4 className="font-medium text-sm leading-snug">{task.title}</h4>

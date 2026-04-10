@@ -19,12 +19,12 @@ export default function ProjectsPage() {
   if (isLoading) return <LoadingSpinner />
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between gap-3 mb-6">
           <h1 className="text-2xl font-bold">Projects</h1>
-          <Button onClick={() => setModalOpen(true)}>
+          <Button onClick={() => setModalOpen(true)} className="shrink-0">
             <FolderPlus className="w-4 h-4" />
             New Project
           </Button>

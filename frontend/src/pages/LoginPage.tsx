@@ -36,7 +36,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="flex justify-center mb-6">
           <div className="flex items-center gap-2 font-bold text-2xl">
@@ -45,7 +45,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
+        <div className="glass-heavy rounded-2xl p-6 sm:p-8">
           <h1 className="text-xl font-semibold mb-4">Sign in</h1>
 
           <form onSubmit={handleSubmit} className="space-y-4">

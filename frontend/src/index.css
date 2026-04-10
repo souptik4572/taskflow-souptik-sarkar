@@ -71,7 +71,91 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground font-sans;
+    /* macOS-style gradient canvas — glass surfaces sit on top of this */
+    background: linear-gradient(145deg, #f0f4ff 0%, #faf5ff 50%, #fdf2f8 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  .dark body {
+    background: linear-gradient(145deg, #06080f 0%, #0c0618 50%, #0f0812 100%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+/* ─── Glassmorphism utilities ──────────────────────────────────────────────── */
+@layer utilities {
+  /* Standard glass — cards, panels, toolbars */
+  .glass {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  }
+  .dark .glass {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Heavy glass — modals, dialogs, auth cards */
+  .glass-heavy {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+  .dark .glass-heavy {
+    background: rgba(10, 8, 20, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* Navbar frosted glass — tight to macOS menu bar feel */
+  .glass-navbar {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.05);
+  }
+  .dark .glass-navbar {
+    background: rgba(6, 8, 15, 0.75);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Input / textarea glass */
+  .glass-input {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .dark .glass-input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Smooth dark/light mode transitions.
+   Uses * (specificity 0) so any explicit Tailwind transition-* class on a
+   component automatically wins, preserving hover/animation durations. */
+*, *::before, *::after {
+  transition: color 200ms ease, background-color 200ms ease,
+              border-color 200ms ease, fill 200ms ease, stroke 200ms ease;
 }

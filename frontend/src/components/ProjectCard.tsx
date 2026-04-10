@@ -9,7 +9,7 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <div
       onClick={() => navigate(`/projects/${project.id}`)}
-      className="bg-white border border-border rounded-lg p-5 cursor-pointer hover:border-primary/50 hover:shadow-sm transition-all"
+      className="glass rounded-2xl p-5 cursor-pointer hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
     >
       <div className="flex items-start gap-3">
         <div className="p-2 bg-primary/10 rounded-md shrink-0">

@@ -2,9 +2,9 @@ import { cn } from '../lib/utils'
 import type { TaskStatus } from '../lib/types'
 
 const statusConfig: Record<TaskStatus, { label: string; className: string }> = {
-  todo: { label: 'To Do', className: 'bg-slate-100 text-slate-700' },
-  in_progress: { label: 'In Progress', className: 'bg-blue-100 text-blue-700' },
-  done: { label: 'Done', className: 'bg-green-100 text-green-700' },
+  todo: { label: 'To Do', className: 'bg-muted text-muted-foreground' },
+  in_progress: { label: 'In Progress', className: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
+  done: { label: 'Done', className: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' },
 }
 
 export function StatusBadge({ status }: { status: TaskStatus }) {

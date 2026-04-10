@@ -3,6 +3,7 @@ import {
   DndContext,
   DragOverlay,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   closestCorners,
@@ -50,7 +51,7 @@ function KanbanCard({ task, onClick, isDragging = false }: KanbanCardProps) {
       {...attributes}
       {...listeners}
       onClick={onClick}
-      className={`bg-card border border-border rounded-lg p-3 cursor-grab active:cursor-grabbing hover:border-primary/50 hover:shadow-sm transition-all select-none ${isDragging ? 'shadow-lg rotate-1' : ''}`}
+      className={`glass rounded-2xl p-3 cursor-grab active:cursor-grabbing hover:shadow-xl transition-all duration-200 select-none ${isDragging ? 'shadow-2xl rotate-1 scale-105' : ''}`}
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-sm font-medium leading-snug line-clamp-2">{task.title}</span>
@@ -84,8 +85,10 @@ function DroppableColumn({ id, children }: { id: string; children: React.ReactNo
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-col gap-2 min-h-[120px] p-2 rounded-lg border border-dashed transition-colors ${
-        isOver ? 'bg-primary/10 border-primary/50' : 'bg-muted/30 border-border'
+      className={`flex flex-col gap-2 min-h-[120px] p-2 rounded-2xl border border-dashed transition-all duration-200 ${
+        isOver
+          ? 'bg-primary/10 dark:bg-primary/15 border-primary/40 backdrop-blur-sm'
+          : 'bg-white/25 dark:bg-white/[0.03] border-white/40 dark:border-white/10 backdrop-blur-sm'
       }`}
     >
       {children}
@@ -95,7 +98,7 @@ function DroppableColumn({ id, children }: { id: string; children: React.ReactNo
 
 function DragOverlayCard({ task }: { task: Task }) {
   return (
-    <div className="bg-card border border-primary rounded-lg p-3 shadow-xl rotate-2 select-none w-64">
+    <div className="glass-heavy rounded-2xl p-3 shadow-2xl rotate-2 select-none w-64 ring-1 ring-primary/30">
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-sm font-medium leading-snug line-clamp-2">{task.title}</span>
         <PriorityBadge priority={task.priority} />
@@ -115,7 +118,12 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
   const [activeTask, setActiveTask] = useState<Task | null>(null)
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
+    // Mouse / trackpad — activates after 8px movement
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    // Touch — requires a 250 ms hold to differentiate drag from scroll
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 250, tolerance: 5 },
+    })
   )
 
   const tasksByColumn = (colId: TaskStatus) => tasks.filter((t) => t.status === colId)
@@ -157,7 +165,9 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* On mobile: full-bleed horizontal scroll so all 3 columns stay side-by-side */}
+      <div className="overflow-x-auto -mx-4 px-4 pb-2 sm:mx-0 sm:px-0 sm:pb-0">
+      <div className="grid grid-cols-3 gap-3 min-w-[600px] sm:min-w-0 sm:gap-4">
         {COLUMNS.map((col) => {
           const colTasks = tasksByColumn(col.id)
           return (
@@ -194,6 +204,7 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
           )
         })}
       </div>
+      </div>{/* end scroll wrapper */}
 
       <DragOverlay>
         {activeTask ? <DragOverlayCard task={activeTask} /> : null}
