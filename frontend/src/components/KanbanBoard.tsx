@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
   DndContext,
   DragOverlay,
   PointerSensor,
   useSensor,
   useSensors,
-  closestCenter,
+  closestCorners,
+  useDroppable,
 } from '@dnd-kit/core'
 import type { DragStartEvent, DragEndEvent } from '@dnd-kit/core'
 import {
@@ -78,6 +79,20 @@ function KanbanCard({ task, onClick, isDragging = false }: KanbanCardProps) {
   )
 }
 
+function DroppableColumn({ id, children }: { id: string; children: React.ReactNode }) {
+  const { setNodeRef, isOver } = useDroppable({ id })
+  return (
+    <div
+      ref={setNodeRef}
+      className={`flex flex-col gap-2 min-h-[120px] p-2 rounded-lg border border-dashed transition-colors ${
+        isOver ? 'bg-primary/10 border-primary/50' : 'bg-muted/30 border-border'
+      }`}
+    >
+      {children}
+    </div>
+  )
+}
+
 function DragOverlayCard({ task }: { task: Task }) {
   return (
     <div className="bg-card border border-primary rounded-lg p-3 shadow-xl rotate-2 select-none w-64">
@@ -138,7 +153,7 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
   return (
     <DndContext
       sensors={sensors}
-      collisionDetection={closestCenter}
+      collisionDetection={closestCorners}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
@@ -148,7 +163,6 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
           return (
             <div
               key={col.id}
-              id={col.id}
               className="flex flex-col gap-2"
             >
               <div className="flex items-center justify-between px-1 mb-1">
@@ -156,10 +170,7 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
                 <span className="text-xs text-muted-foreground">{colTasks.length}</span>
               </div>
 
-              <div
-                data-column={col.id}
-                className="flex flex-col gap-2 min-h-[120px] p-2 rounded-lg bg-muted/30 border border-dashed border-border"
-              >
+              <DroppableColumn id={col.id}>
                 <SortableContext
                   items={colTasks.map((t) => t.id)}
                   strategy={verticalListSortingStrategy}
@@ -178,7 +189,7 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
                     Drop tasks here
                   </p>
                 )}
-              </div>
+              </DroppableColumn>
             </div>
           )
         })}

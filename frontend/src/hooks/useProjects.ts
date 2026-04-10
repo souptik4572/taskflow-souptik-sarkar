@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import axios from 'axios'
 import { api } from '../lib/api'
 import type { Project } from '../lib/types'
 
@@ -15,8 +16,12 @@ export function useProjects() {
       const { data } = await api.projects.list({ page, limit })
       setProjects(data.data)
       setTotal(data.total)
-    } catch {
-      setError('Failed to load projects')
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err) && !err.response) {
+        setError('Cannot reach the server — is the backend running on port 8000?')
+      } else {
+        setError('Failed to load projects')
+      }
     } finally {
       setIsLoading(false)
     }

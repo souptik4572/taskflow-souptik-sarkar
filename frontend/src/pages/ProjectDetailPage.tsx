@@ -60,8 +60,18 @@ export default function ProjectDetailPage() {
         if (task.assignee) members.set(task.assignee.id, task.assignee)
       }
       setProjectMembers(Array.from(members.values()))
-    } catch {
-      setPageError('Project not found')
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 404) {
+          setPageError('Project not found')
+        } else if (!err.response) {
+          setPageError('Cannot reach the server — is the backend running?')
+        } else {
+          setPageError(`Error ${err.response.status}: ${err.response.data?.error ?? 'Failed to load project'}`)
+        }
+      } else {
+        setPageError('An unexpected error occurred')
+      }
     } finally {
       setPageLoading(false)
     }
@@ -162,12 +172,12 @@ export default function ProjectDetailPage() {
         <div className="flex flex-wrap items-center gap-3 mt-6 mb-4">
           {/* Status filter — hidden in board mode (board shows all columns) */}
           {viewMode === 'list' && (
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <Select value={statusFilter || 'all'} onValueChange={(v) => setStatusFilter(v === 'all' ? '' : v)}>
               <SelectTrigger className="w-36">
                 <SelectValue placeholder="All statuses" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All statuses</SelectItem>
+                <SelectItem value="all">All statuses</SelectItem>
                 <SelectItem value="todo">To Do</SelectItem>
                 <SelectItem value="in_progress">In Progress</SelectItem>
                 <SelectItem value="done">Done</SelectItem>
@@ -176,12 +186,12 @@ export default function ProjectDetailPage() {
           )}
 
           {projectMembers.length > 0 && (
-            <Select value={assigneeFilter} onValueChange={setAssigneeFilter}>
+            <Select value={assigneeFilter || 'all'} onValueChange={(v) => setAssigneeFilter(v === 'all' ? '' : v)}>
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="All assignees" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All assignees</SelectItem>
+                <SelectItem value="all">All assignees</SelectItem>
                 {projectMembers.map((m) => (
                   <SelectItem key={m.id} value={m.id}>
                     {m.name}

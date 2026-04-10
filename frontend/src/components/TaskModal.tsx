@@ -37,7 +37,7 @@ export function TaskModal({
   const [description, setDescription] = useState(task?.description ?? '')
   const [status, setStatus] = useState<TaskStatus>(task?.status ?? 'todo')
   const [priority, setPriority] = useState<TaskPriority>(task?.priority ?? 'medium')
-  const [assigneeId, setAssigneeId] = useState<string>(task?.assigneeId ?? '')
+  const [assigneeId, setAssigneeId] = useState<string>(task?.assigneeId || 'unassigned')
   const [dueDate, setDueDate] = useState(
     task?.dueDate ? task.dueDate.split('T')[0] : ''
   )
@@ -59,7 +59,7 @@ export function TaskModal({
         description: description.trim() || null,
         ...(isEdit && { status }),
         priority,
-        assigneeId: assigneeId || null,
+        assigneeId: assigneeId === 'unassigned' ? null : assigneeId || null,
         dueDate: dueDate || null,
       })
       onClose()
@@ -166,7 +166,7 @@ export function TaskModal({
                   <SelectValue placeholder="Unassigned" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Unassigned</SelectItem>
+                  <SelectItem value="unassigned">Unassigned</SelectItem>
                   {projectMembers.map((m) => (
                     <SelectItem key={m.id} value={m.id}>
                       {m.name}
