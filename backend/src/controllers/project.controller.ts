@@ -2,13 +2,14 @@ import type { Request, Response } from 'express'
 import { prisma } from '../config/database.js'
 import { sendSuccess, sendError } from '../helpers/response.helper.js'
 import { createSchema, updateSchema, listQuerySchema } from '../validations/project.validation.js'
+import { messages } from '../config/messages.js'
 
 export async function list(req: Request, res: Response): Promise<void> {
   const userId = req.user!.id
 
   const { error: queryError, value: query } = listQuerySchema.validate(req.query)
   if (queryError) {
-    sendError(res, 'validation failed', 400)
+    sendError(res, messages.common.validationFailed, 400)
     return
   }
 
@@ -34,7 +35,7 @@ export async function list(req: Request, res: Response): Promise<void> {
     prisma.project.count({ where }),
   ])
 
-  sendSuccess(res, { data: projects, total, page, limit })
+  sendSuccess(res, { data: projects, total, page, limit }, 200, messages.project.listed)
 }
 
 export async function create(req: Request, res: Response): Promise<void> {
@@ -46,7 +47,7 @@ export async function create(req: Request, res: Response): Promise<void> {
         fields[detail.context.key] = detail.message.replace(/['"]/g, '')
       }
     }
-    sendError(res, 'validation failed', 400, fields)
+    sendError(res, messages.common.validationFailed, 400, fields)
     return
   }
 
@@ -54,7 +55,7 @@ export async function create(req: Request, res: Response): Promise<void> {
     data: { name: value.name, description: value.description, ownerId: req.user!.id },
   })
 
-  sendSuccess(res, project, 201)
+  sendSuccess(res, project, 201, messages.project.created)
 }
 
 export async function getById(req: Request, res: Response): Promise<void> {
@@ -73,23 +74,23 @@ export async function getById(req: Request, res: Response): Promise<void> {
   })
 
   if (!project) {
-    sendError(res, 'not found', 404)
+    sendError(res, messages.common.notFound, 404)
     return
   }
 
-  sendSuccess(res, project)
+  sendSuccess(res, project, 200, messages.project.fetched)
 }
 
 export async function update(req: Request, res: Response): Promise<void> {
   const id = String(req.params['id'])
   const project = await prisma.project.findUnique({ where: { id } })
   if (!project) {
-    sendError(res, 'not found', 404)
+    sendError(res, messages.common.notFound, 404)
     return
   }
 
   if (project.ownerId !== req.user!.id) {
-    sendError(res, 'forbidden', 403)
+    sendError(res, messages.common.forbidden, 403)
     return
   }
 
@@ -101,7 +102,7 @@ export async function update(req: Request, res: Response): Promise<void> {
         fields[detail.context.key] = detail.message.replace(/['"]/g, '')
       }
     }
-    sendError(res, 'validation failed', 400, fields)
+    sendError(res, messages.common.validationFailed, 400, fields)
     return
   }
 
@@ -110,31 +111,31 @@ export async function update(req: Request, res: Response): Promise<void> {
     data: value,
   })
 
-  sendSuccess(res, updated)
+  sendSuccess(res, updated, 200, messages.project.updated)
 }
 
 export async function deleteProject(req: Request, res: Response): Promise<void> {
   const id = String(req.params['id'])
   const project = await prisma.project.findUnique({ where: { id } })
   if (!project) {
-    sendError(res, 'not found', 404)
+    sendError(res, messages.common.notFound, 404)
     return
   }
 
   if (project.ownerId !== req.user!.id) {
-    sendError(res, 'forbidden', 403)
+    sendError(res, messages.common.forbidden, 403)
     return
   }
 
   await prisma.project.delete({ where: { id: project.id } })
-  res.status(204).send()
+  sendSuccess(res, null, 200, messages.project.deleted)
 }
 
 export async function getStats(req: Request, res: Response): Promise<void> {
   const id = String(req.params['id'])
   const project = await prisma.project.findUnique({ where: { id } })
   if (!project) {
-    sendError(res, 'not found', 404)
+    sendError(res, messages.common.notFound, 404)
     return
   }
 
@@ -167,5 +168,5 @@ export async function getStats(req: Request, res: Response): Promise<void> {
     count,
   }))
 
-  sendSuccess(res, { byStatus, byAssignee })
+  sendSuccess(res, { byStatus, byAssignee }, 200, messages.project.statsRetrieved)
 }
