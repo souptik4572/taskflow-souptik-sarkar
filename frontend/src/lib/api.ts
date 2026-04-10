@@ -25,6 +25,18 @@ axiosInstance.interceptors.response.use(
   }
 )
 
+export interface PaginatedResponse<T> {
+  data: T[]
+  total: number
+  page: number
+  limit: number
+}
+
+export interface ProjectStats {
+  byStatus: { todo: number; in_progress: number; done: number }
+  byAssignee: { userId: string; name: string; count: number }[]
+}
+
 export const api = {
   auth: {
     login: (email: string, password: string) =>
@@ -33,17 +45,20 @@ export const api = {
       axiosInstance.post<AuthResponse>('/auth/register', { name, email, password }),
   },
   projects: {
-    list: () => axiosInstance.get<{ projects: Project[] }>('/projects'),
+    list: (params?: { page?: number; limit?: number }) =>
+      axiosInstance.get<PaginatedResponse<Project>>('/projects', { params }),
     getById: (id: string) => axiosInstance.get<Project>(`/projects/${id}`),
     create: (data: { name: string; description?: string }) =>
       axiosInstance.post<Project>('/projects', data),
     update: (id: string, data: { name?: string; description?: string }) =>
       axiosInstance.patch<Project>(`/projects/${id}`, data),
     delete: (id: string) => axiosInstance.delete(`/projects/${id}`),
+    getStats: (id: string) =>
+      axiosInstance.get<ProjectStats>(`/projects/${id}/stats`),
   },
   tasks: {
-    list: (projectId: string, params?: { status?: string; assignee?: string }) =>
-      axiosInstance.get<{ tasks: Task[] }>(`/projects/${projectId}/tasks`, { params }),
+    list: (projectId: string, params?: { status?: string; assignee?: string; page?: number; limit?: number }) =>
+      axiosInstance.get<PaginatedResponse<Task>>(`/projects/${projectId}/tasks`, { params }),
     create: (
       projectId: string,
       data: {

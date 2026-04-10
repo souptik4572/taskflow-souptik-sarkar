@@ -6,6 +6,7 @@ import {
   getById,
   update,
   deleteProject,
+  getStats,
 } from '../controllers/project.controller.js'
 
 const router = Router()
@@ -14,6 +15,7 @@ router.use(authenticate)
 
 router.get('/', list)
 router.post('/', create)
+router.get('/:id/stats', getStats)
 router.get('/:id', getById)
 router.patch('/:id', update)
 router.delete('/:id', deleteProject)

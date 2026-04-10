@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -9,6 +10,7 @@ import ProjectDetailPage from './pages/ProjectDetailPage'
 export default function App() {
   return (
     <BrowserRouter>
+      <ThemeProvider>
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -33,6 +35,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/projects" replace />} />
         </Routes>
       </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

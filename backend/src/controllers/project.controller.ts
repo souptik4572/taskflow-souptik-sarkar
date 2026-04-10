@@ -1,25 +1,40 @@
 import type { Request, Response } from 'express'
 import { prisma } from '../config/database.js'
 import { sendSuccess, sendError } from '../helpers/response.helper.js'
-import { createSchema, updateSchema } from '../validations/project.validation.js'
+import { createSchema, updateSchema, listQuerySchema } from '../validations/project.validation.js'
 
 export async function list(req: Request, res: Response): Promise<void> {
   const userId = req.user!.id
 
-  const projects = await prisma.project.findMany({
-    where: {
-      OR: [
-        { ownerId: userId },
-        { tasks: { some: { assigneeId: userId } } },
-      ],
-    },
-    include: {
-      _count: { select: { tasks: true } },
-    },
-    orderBy: { createdAt: 'desc' },
-  })
+  const { error: queryError, value: query } = listQuerySchema.validate(req.query)
+  if (queryError) {
+    sendError(res, 'validation failed', 400)
+    return
+  }
 
-  sendSuccess(res, { projects })
+  const page: number = query.page
+  const limit: number = query.limit
+  const skip = (page - 1) * limit
+
+  const where = {
+    OR: [
+      { ownerId: userId },
+      { tasks: { some: { assigneeId: userId } } },
+    ],
+  }
+
+  const [projects, total] = await prisma.$transaction([
+    prisma.project.findMany({
+      where,
+      include: { _count: { select: { tasks: true } } },
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take: limit,
+    }),
+    prisma.project.count({ where }),
+  ])
+
+  sendSuccess(res, { data: projects, total, page, limit })
 }
 
 export async function create(req: Request, res: Response): Promise<void> {
@@ -113,4 +128,44 @@ export async function deleteProject(req: Request, res: Response): Promise<void> 
 
   await prisma.project.delete({ where: { id: project.id } })
   res.status(204).send()
+}
+
+export async function getStats(req: Request, res: Response): Promise<void> {
+  const id = String(req.params['id'])
+  const project = await prisma.project.findUnique({ where: { id } })
+  if (!project) {
+    sendError(res, 'not found', 404)
+    return
+  }
+
+  const [todo, in_progress, done, tasks] = await prisma.$transaction([
+    prisma.task.count({ where: { projectId: id, status: 'todo' } }),
+    prisma.task.count({ where: { projectId: id, status: 'in_progress' } }),
+    prisma.task.count({ where: { projectId: id, status: 'done' } }),
+    prisma.task.findMany({
+      where: { projectId: id, assigneeId: { not: null } },
+      select: { assigneeId: true, assignee: { select: { id: true, name: true } } },
+    }),
+  ])
+
+  const byStatus = { todo, in_progress, done }
+
+  const countMap = new Map<string, { name: string; count: number }>()
+  for (const t of tasks) {
+    if (!t.assigneeId || !t.assignee) continue
+    const entry = countMap.get(t.assigneeId)
+    if (entry) {
+      entry.count += 1
+    } else {
+      countMap.set(t.assigneeId, { name: t.assignee.name, count: 1 })
+    }
+  }
+
+  const byAssignee = Array.from(countMap.entries()).map(([userId, { name, count }]) => ({
+    userId,
+    name,
+    count,
+  }))
+
+  sendSuccess(res, { byStatus, byAssignee })
 }

@@ -20,4 +20,6 @@ export const updateSchema = Joi.object({
 export const listQuerySchema = Joi.object({
   status: Joi.string().valid('todo', 'in_progress', 'done').optional(),
   assignee: Joi.string().uuid().optional(),
+  page: Joi.number().integer().min(1).default(1),
+  limit: Joi.number().integer().min(1).max(100).default(20),
 })

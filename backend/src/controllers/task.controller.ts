@@ -18,6 +18,10 @@ export async function list(req: Request, res: Response): Promise<void> {
     return
   }
 
+  const page: number = query.page
+  const limit: number = query.limit
+  const skip = (page - 1) * limit
+
   const where: {
     projectId: string
     status?: TaskStatus
@@ -27,15 +31,18 @@ export async function list(req: Request, res: Response): Promise<void> {
   if (query.status) where.status = query.status as TaskStatus
   if (query.assignee) where.assigneeId = query.assignee
 
-  const tasks = await prisma.task.findMany({
-    where,
-    include: {
-      assignee: { select: { id: true, name: true, email: true } },
-    },
-    orderBy: { createdAt: 'desc' },
-  })
+  const [tasks, total] = await prisma.$transaction([
+    prisma.task.findMany({
+      where,
+      include: { assignee: { select: { id: true, name: true, email: true } } },
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take: limit,
+    }),
+    prisma.task.count({ where }),
+  ])
 
-  sendSuccess(res, { tasks })
+  sendSuccess(res, { data: tasks, total, page, limit })
 }
 
 export async function create(req: Request, res: Response): Promise<void> {

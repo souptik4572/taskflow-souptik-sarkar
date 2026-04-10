@@ -4,15 +4,17 @@ import type { Project } from '../lib/types'
 
 export function useProjects() {
   const [projects, setProjects] = useState<Project[]>([])
+  const [total, setTotal] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchProjects = useCallback(async () => {
+  const fetchProjects = useCallback(async (page = 1, limit = 20) => {
     setIsLoading(true)
     setError(null)
     try {
-      const { data } = await api.projects.list()
-      setProjects(data.projects)
+      const { data } = await api.projects.list({ page, limit })
+      setProjects(data.data)
+      setTotal(data.total)
     } catch {
       setError('Failed to load projects')
     } finally {
@@ -23,6 +25,7 @@ export function useProjects() {
   const createProject = useCallback(async (name: string, description?: string) => {
     const { data } = await api.projects.create({ name, description })
     setProjects((prev) => [data, ...prev])
+    setTotal((t) => t + 1)
     return data
   }, [])
 
@@ -38,7 +41,8 @@ export function useProjects() {
   const deleteProject = useCallback(async (id: string) => {
     await api.projects.delete(id)
     setProjects((prev) => prev.filter((p) => p.id !== id))
+    setTotal((t) => t - 1)
   }, [])
 
-  return { projects, isLoading, error, fetchProjects, createProject, updateProject, deleteProject }
+  return { projects, total, isLoading, error, fetchProjects, createProject, updateProject, deleteProject }
 }

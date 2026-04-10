@@ -1,19 +1,22 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Plus, Pencil, Trash2 } from 'lucide-react'
+import { ArrowLeft, Plus, Pencil, Trash2, LayoutList, Columns } from 'lucide-react'
 import { api } from '../lib/api'
 import { useTasks } from '../hooks/useTasks'
 import { useAuth } from '../context/AuthContext'
 import { Navbar } from '../components/Navbar'
 import { TaskCard } from '../components/TaskCard'
+import { KanbanBoard } from '../components/KanbanBoard'
 import { TaskModal } from '../components/TaskModal'
 import { ProjectModal } from '../components/ProjectModal'
 import { EmptyState } from '../components/EmptyState'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import { Button } from '../components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
-import type { Project, Task, User } from '../lib/types'
+import type { Project, Task, TaskStatus, User } from '../lib/types'
 import axios from 'axios'
+
+type ViewMode = 'list' | 'board'
 
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -24,6 +27,7 @@ export default function ProjectDetailPage() {
   const [projectMembers, setProjectMembers] = useState<User[]>([])
   const [pageLoading, setPageLoading] = useState(true)
   const [pageError, setPageError] = useState<string | null>(null)
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
 
   const [statusFilter, setStatusFilter] = useState('')
   const [assigneeFilter, setAssigneeFilter] = useState('')
@@ -33,8 +37,15 @@ export default function ProjectDetailPage() {
   const [editProjectOpen, setEditProjectOpen] = useState(false)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
-  const { tasks, isLoading: tasksLoading, fetchTasks, createTask, updateTask, deleteTask } =
-    useTasks(id!)
+  const {
+    tasks,
+    isLoading: tasksLoading,
+    fetchTasks,
+    createTask,
+    updateTask,
+    updateTaskStatusOptimistic,
+    deleteTask,
+  } = useTasks(id!)
 
   const loadProject = useCallback(async () => {
     if (!id) return
@@ -43,7 +54,6 @@ export default function ProjectDetailPage() {
     try {
       const { data } = await api.projects.getById(id)
       setProject(data)
-      // collect unique members: owner + all assignees
       const members = new Map<string, User>()
       if (data.owner) members.set(data.owner.id, data.owner)
       for (const task of data.tasks ?? []) {
@@ -90,9 +100,10 @@ export default function ProjectDetailPage() {
       <div className="min-h-screen bg-background">
         <Navbar />
         <main className="max-w-6xl mx-auto px-4 py-8">
-          <EmptyState message={pageError ?? 'Project not found'} action={
-            <Button onClick={() => navigate('/projects')}>Back to Projects</Button>
-          } />
+          <EmptyState
+            message={pageError ?? 'Project not found'}
+            action={<Button onClick={() => navigate('/projects')}>Back to Projects</Button>}
+          />
         </main>
       </div>
     )
@@ -110,7 +121,7 @@ export default function ProjectDetailPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <main className="max-w-6xl mx-auto px-4 py-8">
-        {/* Header */}
+        {/* Back link */}
         <button
           onClick={() => navigate('/projects')}
           className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors"
@@ -119,6 +130,7 @@ export default function ProjectDetailPage() {
           All Projects
         </button>
 
+        {/* Project header */}
         <div className="flex items-start justify-between gap-4 mb-2">
           <div>
             <h1 className="text-2xl font-bold">{project.name}</h1>
@@ -146,19 +158,22 @@ export default function ProjectDetailPage() {
           </div>
         )}
 
-        {/* Filters + Add Task */}
+        {/* Toolbar: filters + view toggle + add button */}
         <div className="flex flex-wrap items-center gap-3 mt-6 mb-4">
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-36">
-              <SelectValue placeholder="All statuses" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="">All statuses</SelectItem>
-              <SelectItem value="todo">To Do</SelectItem>
-              <SelectItem value="in_progress">In Progress</SelectItem>
-              <SelectItem value="done">Done</SelectItem>
-            </SelectContent>
-          </Select>
+          {/* Status filter — hidden in board mode (board shows all columns) */}
+          {viewMode === 'list' && (
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder="All statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">All statuses</SelectItem>
+                <SelectItem value="todo">To Do</SelectItem>
+                <SelectItem value="in_progress">In Progress</SelectItem>
+                <SelectItem value="done">Done</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
 
           {projectMembers.length > 0 && (
             <Select value={assigneeFilter} onValueChange={setAssigneeFilter}>
@@ -176,15 +191,41 @@ export default function ProjectDetailPage() {
             </Select>
           )}
 
+          {/* View toggle */}
+          <div className="flex items-center gap-1 rounded-md border border-border p-0.5">
+            <button
+              onClick={() => setViewMode('list')}
+              className={`p-1.5 rounded-sm transition-colors ${viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+              aria-label="List view"
+            >
+              <LayoutList className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode('board')}
+              className={`p-1.5 rounded-sm transition-colors ${viewMode === 'board' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+              aria-label="Board view"
+            >
+              <Columns className="w-4 h-4" />
+            </button>
+          </div>
+
           <Button className="ml-auto" onClick={() => setAddTaskOpen(true)}>
             <Plus className="w-4 h-4" />
             Add Task
           </Button>
         </div>
 
-        {/* Task list */}
+        {/* Content */}
         {tasksLoading ? (
           <LoadingSpinner />
+        ) : viewMode === 'board' ? (
+          <KanbanBoard
+            tasks={filteredTasks}
+            onTaskClick={(task) => setEditTask(task)}
+            onStatusChange={async (taskId, status: TaskStatus) => {
+              await updateTaskStatusOptimistic(taskId, status)
+            }}
+          />
         ) : filteredTasks.length === 0 ? (
           <EmptyState
             message={
@@ -207,7 +248,6 @@ export default function ProjectDetailPage() {
         )}
       </main>
 
-      {/* Add task modal */}
       <TaskModal
         open={addTaskOpen}
         onClose={() => setAddTaskOpen(false)}
@@ -223,7 +263,6 @@ export default function ProjectDetailPage() {
         projectMembers={projectMembers}
       />
 
-      {/* Edit task modal */}
       {editTask && (
         <TaskModal
           open={!!editTask}
@@ -240,7 +279,6 @@ export default function ProjectDetailPage() {
         />
       )}
 
-      {/* Edit project modal */}
       <ProjectModal
         open={editProjectOpen}
         onClose={() => setEditProjectOpen(false)}
