@@ -25,6 +25,7 @@ export const messages = {
   },
   task: {
     listed: 'Tasks retrieved successfully',
+    fetched: 'Task retrieved successfully',
     created: 'Task created successfully',
     updated: 'Task updated successfully',
     deleted: 'Task deleted successfully',

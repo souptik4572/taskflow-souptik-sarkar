@@ -59,6 +59,7 @@ export const api = {
   tasks: {
     list: (projectId: string, params?: { status?: string; assignee?: string; page?: number; limit?: number }) =>
       axiosInstance.get<PaginatedResponse<Task>>(`/projects/${projectId}/tasks`, { params }),
+    getById: (id: string) => axiosInstance.get<Task>(`/tasks/${id}`),
     create: (
       projectId: string,
       data: {

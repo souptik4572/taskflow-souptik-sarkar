@@ -1,6 +1,13 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Plus, Pencil, Trash2, LayoutList, Columns } from 'lucide-react'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '../components/ui/dialog'
 import { api } from '../lib/api'
 import { useTasks } from '../hooks/useTasks'
 import { useAuth } from '../context/AuthContext'
@@ -13,7 +20,7 @@ import { EmptyState } from '../components/EmptyState'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import { Button } from '../components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
-import type { Project, Task, TaskStatus, User } from '../lib/types'
+import type { Project, TaskStatus, User } from '../lib/types'
 import axios from 'axios'
 
 type ViewMode = 'list' | 'board'
@@ -33,8 +40,9 @@ export default function ProjectDetailPage() {
   const [assigneeFilter, setAssigneeFilter] = useState('')
 
   const [addTaskOpen, setAddTaskOpen] = useState(false)
-  const [editTask, setEditTask] = useState<Task | null>(null)
   const [editProjectOpen, setEditProjectOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const {
@@ -42,9 +50,7 @@ export default function ProjectDetailPage() {
     isLoading: tasksLoading,
     fetchTasks,
     createTask,
-    updateTask,
     updateTaskStatusOptimistic,
-    deleteTask,
   } = useTasks(id!)
 
   const loadProject = useCallback(async () => {
@@ -92,14 +98,18 @@ export default function ProjectDetailPage() {
 
   async function handleDeleteProject() {
     if (!project) return
-    if (!window.confirm('Delete this project and all its tasks?')) return
+    setIsDeleting(true)
+    setDeleteError(null)
     try {
       await api.projects.delete(project.id)
+      setDeleteOpen(false)
       navigate('/projects')
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        setDeleteError(err.response?.data?.error ?? 'Failed to delete project')
+        setDeleteError(err.response?.data?.message ?? 'Failed to delete project')
       }
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -154,7 +164,7 @@ export default function ProjectDetailPage() {
                 <Pencil className="w-3.5 h-3.5" />
                 Edit
               </Button>
-              <Button variant="destructive" size="sm" onClick={handleDeleteProject}>
+              <Button variant="destructive" size="sm" onClick={() => setDeleteOpen(true)}>
                 <Trash2 className="w-3.5 h-3.5" />
                 Delete
               </Button>
@@ -234,7 +244,7 @@ export default function ProjectDetailPage() {
         ) : viewMode === 'board' ? (
           <KanbanBoard
             tasks={filteredTasks}
-            onTaskClick={(task) => setEditTask(task)}
+            onTaskClick={(task) => navigate(`/projects/${id}/tasks/${task.id}`)}
             onStatusChange={async (taskId, status: TaskStatus) => {
               await updateTaskStatusOptimistic(taskId, status)
             }}
@@ -255,7 +265,11 @@ export default function ProjectDetailPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {filteredTasks.map((task) => (
-              <TaskCard key={task.id} task={task} onClick={() => setEditTask(task)} />
+              <TaskCard
+                key={task.id}
+                task={task}
+                onClick={() => navigate(`/projects/${id}/tasks/${task.id}`)}
+              />
             ))}
           </div>
         )}
@@ -276,22 +290,6 @@ export default function ProjectDetailPage() {
         projectMembers={projectMembers}
       />
 
-      {editTask && (
-        <TaskModal
-          open={!!editTask}
-          onClose={() => setEditTask(null)}
-          task={editTask}
-          isEdit
-          projectMembers={projectMembers}
-          onSubmit={async (data) => {
-            await updateTask(editTask.id, data)
-          }}
-          onDelete={async () => {
-            await deleteTask(editTask.id)
-          }}
-        />
-      )}
-
       <ProjectModal
         open={editProjectOpen}
         onClose={() => setEditProjectOpen(false)}
@@ -301,6 +299,49 @@ export default function ProjectDetailPage() {
           setProject(updated)
         }}
       />
+
+      <Dialog
+        open={deleteOpen}
+        onOpenChange={(open) => { if (!isDeleting) setDeleteOpen(open) }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Project</DialogTitle>
+          </DialogHeader>
+
+          <div className="text-sm text-muted-foreground space-y-2 py-1">
+            <p>
+              This will permanently delete{' '}
+              <span className="font-semibold text-foreground">{project.name}</span>{' '}
+              and all its tasks.
+            </p>
+            <p className="font-medium text-destructive">
+              This action cannot be undone.
+            </p>
+          </div>
+
+          {deleteError && (
+            <p className="text-sm text-destructive">{deleteError}</p>
+          )}
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteOpen(false)}
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteProject}
+              disabled={isDeleting}
+            >
+              {isDeleting ? 'Deleting…' : 'Delete Project'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

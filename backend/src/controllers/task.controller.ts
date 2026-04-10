@@ -85,6 +85,19 @@ export async function create(req: Request, res: Response): Promise<void> {
   sendSuccess(res, task, StatusCodes.CREATED, messages.task.created)
 }
 
+export async function getById(req: Request, res: Response): Promise<void> {
+  const taskId = String(req.params['id'])
+  const task = await prisma.task.findUnique({
+    where: { id: taskId },
+    include: { assignee: { select: { id: true, name: true, email: true } } },
+  })
+  if (!task) {
+    sendError(res, messages.common.notFound, StatusCodes.NOT_FOUND)
+    return
+  }
+  sendSuccess(res, task, StatusCodes.OK, messages.task.fetched)
+}
+
 export async function update(req: Request, res: Response): Promise<void> {
   const taskId = String(req.params['id'])
   const task = await prisma.task.findUnique({ where: { id: taskId } })
