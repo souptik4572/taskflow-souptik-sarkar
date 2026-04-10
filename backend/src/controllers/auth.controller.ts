@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { prisma } from '../config/database.js'
 import { hashPassword, comparePassword } from '../helpers/password.helper.js'
 import { signToken } from '../helpers/jwt.helper.js'
@@ -15,13 +16,13 @@ export async function register(req: Request, res: Response): Promise<void> {
         fields[detail.context.key] = detail.message.replace(/['"]/g, '')
       }
     }
-    sendError(res, messages.common.validationFailed, 400, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
     return
   }
 
   const existing = await prisma.user.findUnique({ where: { email: value.email } })
   if (existing) {
-    sendError(res, messages.auth.emailInUse, 409)
+    sendError(res, messages.auth.emailInUse, StatusCodes.CONFLICT)
     return
   }
 
@@ -32,7 +33,7 @@ export async function register(req: Request, res: Response): Promise<void> {
   })
 
   const token = signToken({ userId: user.id, email: user.email })
-  sendSuccess(res, { token, user: { id: user.id, name: user.name, email: user.email } }, 201, messages.auth.registered)
+  sendSuccess(res, { token, user: { name: user.name, email: user.email } }, StatusCodes.CREATED, messages.auth.registered)
 }
 
 export async function login(req: Request, res: Response): Promise<void> {
@@ -44,22 +45,22 @@ export async function login(req: Request, res: Response): Promise<void> {
         fields[detail.context.key] = detail.message.replace(/['"]/g, '')
       }
     }
-    sendError(res, messages.common.validationFailed, 400, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
     return
   }
 
   const user = await prisma.user.findUnique({ where: { email: value.email } })
   if (!user) {
-    sendError(res, messages.auth.invalidCredentials, 401)
+    sendError(res, messages.auth.invalidCredentials, StatusCodes.UNAUTHORIZED)
     return
   }
 
   const valid = await comparePassword(value.password, user.password)
   if (!valid) {
-    sendError(res, messages.auth.invalidCredentials, 401)
+    sendError(res, messages.auth.invalidCredentials, StatusCodes.UNAUTHORIZED)
     return
   }
 
   const token = signToken({ userId: user.id, email: user.email })
-  sendSuccess(res, { token, user: { id: user.id, name: user.name, email: user.email } }, 200, messages.auth.loggedIn)
+  sendSuccess(res, { token }, StatusCodes.OK, messages.auth.loggedIn)
 }

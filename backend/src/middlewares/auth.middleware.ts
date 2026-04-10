@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { verifyToken } from '../helpers/jwt.helper.js'
 import { prisma } from '../config/database.js'
 import { sendError } from '../helpers/response.helper.js'
@@ -10,7 +11,7 @@ export async function authenticate(
 ): Promise<void> {
   const authHeader = req.headers['authorization']
   if (!authHeader?.startsWith('Bearer ')) {
-    sendError(res, 'unauthorized', 401)
+    sendError(res, 'unauthorized', StatusCodes.UNAUTHORIZED)
     return
   }
 
@@ -23,13 +24,13 @@ export async function authenticate(
     })
 
     if (!user) {
-      sendError(res, 'unauthorized', 401)
+      sendError(res, 'unauthorized', StatusCodes.UNAUTHORIZED)
       return
     }
 
     req.user = user
     next()
   } catch {
-    sendError(res, 'unauthorized', 401)
+    sendError(res, 'unauthorized', StatusCodes.UNAUTHORIZED)
   }
 }

@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { config } from '../config/env.js'
 import { messages } from '../config/messages.js'
 
@@ -12,9 +13,9 @@ export function errorHandler(
   logger.error({ err }, 'unhandled error')
 
   if (config.nodeEnv === 'development') {
-    res.status(500).json({ message: err.message, stack: err.stack })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message, stack: err.stack })
     return
   }
 
-  res.status(500).json({ message: messages.common.internalError })
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: messages.common.internalError })
 }

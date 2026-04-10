@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import type { TaskStatus, TaskPriority } from '@prisma/client'
+import { StatusCodes } from 'http-status-codes'
 import { prisma } from '../config/database.js'
 import { sendSuccess, sendError } from '../helpers/response.helper.js'
 import { createSchema, updateSchema, listQuerySchema } from '../validations/task.validation.js'
@@ -8,14 +9,14 @@ import { messages } from '../config/messages.js'
 export async function list(req: Request, res: Response): Promise<void> {
   const { error: queryError, value: query } = listQuerySchema.validate(req.query)
   if (queryError) {
-    sendError(res, messages.common.validationFailed, 400)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST)
     return
   }
 
   const projectId = String(req.params['id'])
   const project = await prisma.project.findUnique({ where: { id: projectId } })
   if (!project) {
-    sendError(res, messages.common.notFound, 404)
+    sendError(res, messages.common.notFound, StatusCodes.NOT_FOUND)
     return
   }
 
@@ -43,14 +44,14 @@ export async function list(req: Request, res: Response): Promise<void> {
     prisma.task.count({ where }),
   ])
 
-  sendSuccess(res, { data: tasks, total, page, limit }, 200, messages.task.listed)
+  sendSuccess(res, { data: tasks, total, page, limit }, StatusCodes.OK, messages.task.listed)
 }
 
 export async function create(req: Request, res: Response): Promise<void> {
   const projectId = String(req.params['id'])
   const project = await prisma.project.findUnique({ where: { id: projectId } })
   if (!project) {
-    sendError(res, messages.common.notFound, 404)
+    sendError(res, messages.common.notFound, StatusCodes.NOT_FOUND)
     return
   }
 
@@ -62,7 +63,7 @@ export async function create(req: Request, res: Response): Promise<void> {
         fields[detail.context.key] = detail.message.replace(/['"]/g, '')
       }
     }
-    sendError(res, messages.common.validationFailed, 400, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
     return
   }
 
@@ -81,14 +82,14 @@ export async function create(req: Request, res: Response): Promise<void> {
     },
   })
 
-  sendSuccess(res, task, 201, messages.task.created)
+  sendSuccess(res, task, StatusCodes.CREATED, messages.task.created)
 }
 
 export async function update(req: Request, res: Response): Promise<void> {
   const taskId = String(req.params['id'])
   const task = await prisma.task.findUnique({ where: { id: taskId } })
   if (!task) {
-    sendError(res, messages.common.notFound, 404)
+    sendError(res, messages.common.notFound, StatusCodes.NOT_FOUND)
     return
   }
 
@@ -100,7 +101,7 @@ export async function update(req: Request, res: Response): Promise<void> {
         fields[detail.context.key] = detail.message.replace(/['"]/g, '')
       }
     }
-    sendError(res, messages.common.validationFailed, 400, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
     return
   }
 
@@ -121,7 +122,7 @@ export async function update(req: Request, res: Response): Promise<void> {
     },
   })
 
-  sendSuccess(res, updated, 200, messages.task.updated)
+  sendSuccess(res, updated, StatusCodes.OK, messages.task.updated)
 }
 
 export async function deleteTask(req: Request, res: Response): Promise<void> {
@@ -132,16 +133,16 @@ export async function deleteTask(req: Request, res: Response): Promise<void> {
   })
 
   if (!task) {
-    sendError(res, messages.common.notFound, 404)
+    sendError(res, messages.common.notFound, StatusCodes.NOT_FOUND)
     return
   }
 
   const userId = req.user!.id
   if (task.project.ownerId !== userId && task.creatorId !== userId) {
-    sendError(res, messages.common.forbidden, 403)
+    sendError(res, messages.common.forbidden, StatusCodes.FORBIDDEN)
     return
   }
 
   await prisma.task.delete({ where: { id: task.id } })
-  sendSuccess(res, null, 200, messages.task.deleted)
+  sendSuccess(res, null, StatusCodes.OK, messages.task.deleted)
 }

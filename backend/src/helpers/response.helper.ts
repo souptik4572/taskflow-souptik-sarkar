@@ -1,4 +1,5 @@
 import type { Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 
 /**
  * Sends a successful JSON response.
@@ -6,7 +7,12 @@ import type { Response } from 'express'
  * merged at the top level so existing response shapes are preserved; arrays
  * and primitives are placed under a `data` key.
  */
-export function sendSuccess(res: Response, data: unknown, status = 200, message?: string): void {
+export function sendSuccess(
+  res: Response,
+  data: unknown,
+  status = StatusCodes.OK,
+  message?: string
+): void {
   let body: Record<string, unknown> =
     typeof data === 'object' && data !== null && !Array.isArray(data)
       ? { ...(data as Record<string, unknown>) }
@@ -22,7 +28,7 @@ export function sendSuccess(res: Response, data: unknown, status = 200, message?
 export function sendError(
   res: Response,
   message: string,
-  status = 500,
+  status = StatusCodes.INTERNAL_SERVER_ERROR,
   fields?: Record<string, string>
 ): void {
   const body: { message: string; fields?: Record<string, string> } = { message }
