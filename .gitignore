@@ -143,3 +143,7 @@ vite.config.ts.timestamp-*
 
 # AI Reference
 IMPLEMENTATION_PLAN.md
+CLAUDE.md
+GEMINI.md
+.cursorrules
+.windsurfrules
