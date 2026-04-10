@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { FolderPlus } from 'lucide-react'
 import { useProjects } from '../hooks/useProjects'
+import { useAuth } from '../context/AuthContext'
 import { Navbar } from '../components/Navbar'
 import { ProjectCard } from '../components/ProjectCard'
 import { ProjectModal } from '../components/ProjectModal'
@@ -9,7 +10,8 @@ import { LoadingSpinner } from '../components/LoadingSpinner'
 import { Button } from '../components/ui/button'
 
 export default function ProjectsPage() {
-  const { projects, isLoading, error, fetchProjects, createProject } = useProjects()
+  const { projects, isLoading, error, fetchProjects, createProject, deleteProject } = useProjects()
+  const { user } = useAuth()
   const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
@@ -47,7 +49,15 @@ export default function ProjectsPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onDelete={
+                  user?.id === project.ownerId
+                    ? () => deleteProject(project.id)
+                    : undefined
+                }
+              />
             ))}
           </div>
         )}

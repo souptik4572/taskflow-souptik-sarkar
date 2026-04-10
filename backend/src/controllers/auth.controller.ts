@@ -32,7 +32,7 @@ export async function register(req: Request, res: Response): Promise<void> {
   })
 
   const token = signToken({ userId: user.id, email: user.email })
-  sendSuccess(res, { token, user: { name: user.name, email: user.email } }, 201, messages.auth.registered)
+  sendSuccess(res, { token, user: { id: user.id, name: user.name, email: user.email } }, 201, messages.auth.registered)
 }
 
 export async function login(req: Request, res: Response): Promise<void> {
@@ -61,5 +61,5 @@ export async function login(req: Request, res: Response): Promise<void> {
   }
 
   const token = signToken({ userId: user.id, email: user.email })
-  sendSuccess(res, { token }, 200, messages.auth.loggedIn)
+  sendSuccess(res, { token, user: { id: user.id, name: user.name, email: user.email } }, 200, messages.auth.loggedIn)
 }
