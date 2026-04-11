@@ -254,7 +254,7 @@ Status updates feel instant — the UI updates immediately and reverts with an e
 ## What I'd Do With More Time
 
 ### State Management
-The current context + hooks approach works well at this scale. With more users and real-time requirements, the next step would be **Zustand** for lightweight global state (simpler than Redux, no boilerplate) or **Redux Toolkit** if the data graph grows complex enough to warrant normalized slices and selectors. A `taskSlice` and `projectSlice` with RTK Query handling API cache invalidation would be the target architecture.
+The current context + hooks approach works well at this scale. With more users and real-time requirements, the next step would be **Zustand** for lightweight global state (simpler than Redux, no boilerplate) or **Redux Toolkit**
 
 ### Real-time Updates
 WebSocket or Server-Sent Events so task changes made by one user appear live for others viewing the same project — without a page refresh.

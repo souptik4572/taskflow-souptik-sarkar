@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { Calendar, User } from 'lucide-react'
+import { Calendar, User, Pencil } from 'lucide-react'
 import { StatusBadge } from './StatusBadge'
 import { PriorityBadge } from './PriorityBadge'
 import type { Task } from '../lib/types'
@@ -7,9 +7,10 @@ import type { Task } from '../lib/types'
 interface TaskCardProps {
   task: Task
   onClick: () => void
+  onEdit?: () => void
 }
 
-export function TaskCard({ task, onClick }: TaskCardProps) {
+export function TaskCard({ task, onClick, onEdit }: TaskCardProps) {
   return (
     <div
       onClick={onClick}
@@ -18,6 +19,15 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
       <div className="flex items-start justify-between gap-2">
         <h4 className="font-medium text-sm leading-snug">{task.title}</h4>
         <div className="flex items-center gap-1.5 shrink-0">
+          {onEdit && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onEdit() }}
+              className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 transition-colors"
+              aria-label={`Edit ${task.title}`}
+            >
+              <Pencil className="w-3.5 h-3.5" />
+            </button>
+          )}
           <PriorityBadge priority={task.priority} />
         </div>
       </div>

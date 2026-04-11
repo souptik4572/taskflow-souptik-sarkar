@@ -17,7 +17,7 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { format } from 'date-fns'
-import { Calendar, User } from 'lucide-react'
+import { Calendar, User, Pencil } from 'lucide-react'
 import { StatusBadge } from './StatusBadge'
 import { PriorityBadge } from './PriorityBadge'
 import type { Task, TaskStatus } from '../lib/types'
@@ -31,10 +31,11 @@ const COLUMNS: { id: TaskStatus; label: string }[] = [
 interface KanbanCardProps {
   task: Task
   onClick: () => void
+  onEdit?: () => void
   isDragging?: boolean
 }
 
-function KanbanCard({ task, onClick, isDragging = false }: KanbanCardProps) {
+function KanbanCard({ task, onClick, onEdit, isDragging = false }: KanbanCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging: isSortableDragging } =
     useSortable({ id: task.id })
 
@@ -55,7 +56,19 @@ function KanbanCard({ task, onClick, isDragging = false }: KanbanCardProps) {
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-sm font-medium leading-snug line-clamp-2">{task.title}</span>
-        <PriorityBadge priority={task.priority} />
+        <div className="flex items-center gap-1 shrink-0">
+          {onEdit && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onEdit() }}
+              onPointerDown={(e) => e.stopPropagation()}
+              className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 transition-colors"
+              aria-label={`Edit ${task.title}`}
+            >
+              <Pencil className="w-3 h-3" />
+            </button>
+          )}
+          <PriorityBadge priority={task.priority} />
+        </div>
       </div>
 
       {task.description && (
@@ -111,10 +124,11 @@ function DragOverlayCard({ task }: { task: Task }) {
 interface KanbanBoardProps {
   tasks: Task[]
   onTaskClick: (task: Task) => void
+  onTaskEdit?: (task: Task) => void
   onStatusChange: (taskId: string, status: TaskStatus) => Promise<void>
 }
 
-export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardProps) {
+export function KanbanBoard({ tasks, onTaskClick, onTaskEdit, onStatusChange }: KanbanBoardProps) {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
 
   const sensors = useSensors(
@@ -190,6 +204,7 @@ export function KanbanBoard({ tasks, onTaskClick, onStatusChange }: KanbanBoardP
                       key={task.id}
                       task={task}
                       onClick={() => onTaskClick(task)}
+                      onEdit={onTaskEdit ? () => onTaskEdit(task) : undefined}
                     />
                   ))}
                 </SortableContext>

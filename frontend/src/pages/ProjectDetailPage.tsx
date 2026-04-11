@@ -21,7 +21,7 @@ import { EmptyState } from '../components/EmptyState'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import { Button } from '../components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
-import type { Project, TaskStatus, User } from '../lib/types'
+import type { Project, Task, TaskStatus, User } from '../lib/types'
 import axios from 'axios'
 import { apiError } from '../lib/toast-utils'
 
@@ -44,6 +44,7 @@ export default function ProjectDetailPage() {
 
   const [addTaskOpen, setAddTaskOpen] = useState(false)
   const [editProjectOpen, setEditProjectOpen] = useState(false)
+  const [editTask, setEditTask] = useState<Task | null>(null)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
 
@@ -52,7 +53,9 @@ export default function ProjectDetailPage() {
     isLoading: tasksLoading,
     fetchTasks,
     createTask,
+    updateTask,
     updateTaskStatusOptimistic,
+    deleteTask,
   } = useTasks(id!)
 
   const loadProject = useCallback(async () => {
@@ -243,6 +246,7 @@ export default function ProjectDetailPage() {
           <KanbanBoard
             tasks={filteredTasks}
             onTaskClick={(task) => navigate(`/projects/${id}/tasks/${task.id}`)}
+            onTaskEdit={(task) => setEditTask(task)}
             onStatusChange={async (taskId, status: TaskStatus) => {
               await updateTaskStatusOptimistic(taskId, status)
             }}
@@ -267,6 +271,7 @@ export default function ProjectDetailPage() {
                 key={task.id}
                 task={task}
                 onClick={() => navigate(`/projects/${id}/tasks/${task.id}`)}
+                onEdit={() => setEditTask(task)}
               />
             ))}
           </div>
@@ -284,6 +289,24 @@ export default function ProjectDetailPage() {
             assigneeId: data.assigneeId,
             dueDate: data.dueDate,
           })
+        }}
+        projectMembers={allUsers}
+      />
+
+      <TaskModal
+        open={editTask !== null}
+        onClose={() => setEditTask(null)}
+        task={editTask ?? undefined}
+        isEdit
+        onSubmit={async (data) => {
+          if (!editTask) return
+          await updateTask(editTask.id, data)
+          setEditTask(null)
+        }}
+        onDelete={async () => {
+          if (!editTask) return
+          await deleteTask(editTask.id)
+          setEditTask(null)
         }}
         projectMembers={allUsers}
       />
