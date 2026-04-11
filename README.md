@@ -1,10 +1,10 @@
 # TaskFlow
 
-A full-stack task management system. Users register, log in, create projects, add tasks, assign tasks, and manage work across a list or Kanban board view.
+A full-stack task management app. Register, log in, create projects, add tasks, assign them to team members, and manage work across a list or Kanban board view.
 
 ---
 
-## Overview
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -20,45 +20,144 @@ A full-stack task management system. Users register, log in, create projects, ad
 
 ---
 
-## Running Locally
+## Running with Docker (Recommended)
 
-**Prerequisites:** Docker + Docker Compose installed. No other tools required.
+**Prerequisites:** Docker and Docker Compose installed. No other tools required.
 
 ```bash
+# 1. Clone the repo
 git clone <repo>
 cd taskflow-souptik-sarkar
 
-# Copy env config (defaults work out of the box)
+# 2. Copy environment config — defaults work out of the box
 cp .env.example .env
 
-# Start everything — migrations and seed run automatically
+# 3. Start everything
 docker compose up --build
 ```
 
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000/api/v1
-- Health check: http://localhost:8000/health
+That's it. On startup the backend container automatically:
+1. Runs `prisma migrate deploy` — applies all pending migrations
+2. Runs `prisma db seed` — seeds test data (idempotent, safe to re-run)
+3. Starts the Express server
 
-### Migrations
+**Service URLs:**
 
-Migrations run automatically on backend startup via `scripts/migrate-and-start.sh`:
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:3000 |
+| Backend API | http://localhost:8000/api/v1 |
+| Health check | http://localhost:8000/health |
 
-1. `prisma migrate deploy` — applies all pending migrations
-2. `prisma db seed` — creates seed data (idempotent — safe to re-run)
-3. `node dist/index.js` — starts the Express server
+To stop: `docker compose down`
+To stop and wipe the database volume: `docker compose down -v`
 
-**Zero manual steps required.**
+---
+
+## Running Locally (Without Docker)
+
+**Prerequisites:** Node.js 20+, a running PostgreSQL 16 instance.
+
+### 1. Set up environment variables
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and update `DATABASE_URL` to point to your local Postgres instance:
+
+```
+DATABASE_URL=postgresql://<user>:<password>@localhost:5432/<dbname>?schema=public
+```
+
+### 2. Install dependencies
+
+```bash
+# Backend
+cd backend
+npm install
+
+# Frontend (separate terminal)
+cd frontend
+npm install
+```
+
+### 3. Run database migrations
+
+```bash
+cd backend
+
+# Apply all pending migrations to your local database
+npm run migrate
+```
+
+> This runs `prisma migrate deploy` under the hood — applies committed migration files in order. It does **not** auto-generate new migrations or modify the schema.
+
+### 4. Seed the database
+
+```bash
+cd backend
+npm run seed
+```
+
+Seeds one project, four tasks, and two test users (see Test Credentials below).
+
+### 5. Start the servers
+
+```bash
+# Terminal 1 — Backend (hot-reload)
+cd backend
+npm run dev
+
+# Terminal 2 — Frontend (hot-reload)
+cd frontend
+npm run dev
+```
+
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:8000/api/v1 |
+
+---
+
+## Database Migrations
+
+Schema changes are managed exclusively through Prisma migration files — no `prisma db push`, no manual SQL dumps.
+
+### Creating a new migration
+
+```bash
+cd backend
+
+# 1. Edit prisma/schema.prisma with your changes
+
+# 2. Generate a new migration file and apply it locally
+npm run migrate:new -- --name <describe_your_change>
+# e.g. npm run migrate:new -- --name add_task_labels
+```
+
+This creates a timestamped folder under `prisma/migrations/` with a `.sql` file. **Commit that file** — it is the source of truth and runs automatically on the next `docker compose up` or `npm run migrate`.
+
+### Applying existing migrations
+
+```bash
+cd backend
+npm run migrate
+```
+
+Runs `prisma migrate deploy` — applies any pending migration files in order. Safe to run multiple times.
 
 ---
 
 ## Test Credentials
 
-```
-Email:    test@example.com
-Password: password123
-```
+| User | Email | Password |
+|---|---|---|
+| Primary | test@example.com | password123 |
+| Alternate | testAlternate@gmail.com | password123 |
 
-Pre-seeded with one project ("Website Redesign") and three tasks in different statuses.
+Pre-seeded with one project ("Website Redesign") and four tasks spread across different statuses. The alternate user is assigned to the "Set up CI/CD pipeline" task.
 
 ---
 
@@ -89,73 +188,86 @@ All endpoints prefixed with `/api/v1`.
 
 ### Projects (Bearer token required)
 
-| Method | Path | Query Params | Auth | Response |
-|---|---|---|---|---|
-| GET | `/projects` | `?page=1&limit=20` | Any user | `{data, total, page, limit}` |
-| POST | `/projects` | — | Any user | Project object 201 |
-| GET | `/projects/:id` | — | Any user | Project + tasks |
-| PATCH | `/projects/:id` | — | Owner only | Updated project |
-| DELETE | `/projects/:id` | — | Owner only | 204 |
-| GET | `/projects/:id/stats` | — | Any user | `{byStatus, byAssignee}` |
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/projects` | Paginated: `?page=1&limit=20` |
+| POST | `/projects` | Create a project |
+| GET | `/projects/:id` | Project + tasks |
+| PATCH | `/projects/:id` | Owner only |
+| DELETE | `/projects/:id` | Owner only, returns 204 |
+| GET | `/projects/:id/stats` | `{byStatus, byAssignee}` |
 
 ### Tasks (Bearer token required)
 
-| Method | Path | Query Params | Auth | Response |
-|---|---|---|---|---|
-| GET | `/projects/:id/tasks` | `?status=&assignee=&page=1&limit=20` | Any user | `{data, total, page, limit}` |
-| POST | `/projects/:id/tasks` | — | Any user | Task object 201 |
-| PATCH | `/tasks/:id` | — | Any user | Updated task |
-| DELETE | `/tasks/:id` | — | Project owner or task creator | 204 |
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/projects/:id/tasks` | Filterable: `?status=&assignee=&page=1&limit=20` |
+| POST | `/projects/:id/tasks` | Create a task |
+| PATCH | `/tasks/:id` | Update status, priority, assignee, etc. |
+| DELETE | `/tasks/:id` | Project owner or task creator only, returns 204 |
 
-**Example login:**
+**Example — login and fetch projects:**
+
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/login \
+TOKEN=$(curl -s -X POST http://localhost:8000/api/v1/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","password":"password123"}'
-```
+  -d '{"email":"test@example.com","password":"password123"}' \
+  | jq -r '.token')
 
-**Example paginated projects:**
-```bash
 curl http://localhost:8000/api/v1/projects?page=1&limit=10 \
-  -H "Authorization: Bearer <token>"
-# → { "data": [...], "total": 5, "page": 1, "limit": 10 }
+  -H "Authorization: Bearer $TOKEN"
+# → { "data": [...], "total": 1, "page": 1, "limit": 10 }
 ```
 
-**Example project stats:**
+**Example — project stats:**
+
 ```bash
 curl http://localhost:8000/api/v1/projects/<id>/stats \
-  -H "Authorization: Bearer <token>"
-# → { "byStatus": { "todo": 1, "in_progress": 1, "done": 1 }, "byAssignee": [...] }
+  -H "Authorization: Bearer $TOKEN"
+# → { "byStatus": { "todo": 2, "in_progress": 1, "done": 1 }, "byAssignee": [...] }
 ```
 
 ---
 
 ## Architecture Decisions
 
-**Why Express + Prisma?** Express is lightweight and explicit — no magic, easy to reason about. Prisma gives type-safe DB access with a clean migration workflow, avoiding raw SQL while still producing readable queries.
+**Express + Prisma over heavier frameworks**
+Express is explicit — no magic, easy to trace a request from route to response. Prisma gives type-safe DB access and a clean migration workflow without raw SQL.
 
-**Layered MVC without a separate service layer:** At this project's scope, putting business logic in controllers keeps the codebase flat and navigable. A service layer would be the right call at 3× this size.
+**Flat MVC without a service layer**
+At this scope, putting business logic directly in controllers keeps the codebase flat and navigable. A service layer becomes the right call at roughly 3× this size, when controller functions start sharing substantial logic.
 
-**Why shadcn/ui?** Not a component library you install and fight — it's copy-paste primitives built on Radix (accessible by default) + Tailwind. You own the code, style it freely, no version lock-in.
+**shadcn/ui over a traditional component library**
+shadcn/ui is copy-paste primitives built on Radix UI (accessible by default) + Tailwind. You own every component — no version lock-in, no fighting the library's opinions.
 
-**JWT in localStorage:** The assignment explicitly says "localStorage or equivalent." HttpOnly cookies would be more secure against XSS, but they require CSRF handling; for this scope localStorage is the specified approach.
+**JWT in localStorage**
+The spec explicitly allows "localStorage or equivalent." HttpOnly cookies would be more secure against XSS but require CSRF handling; for this scope localStorage is the specified approach. This is acknowledged as a tradeoff.
 
-**Optimistic UI for task status:** Status changes feel instant. On API failure the state reverts with an error. This keeps the UI snappy without sacrificing correctness.
+**Optimistic UI for task status changes**
+Status updates feel instant — the UI updates immediately and reverts with an error toast if the API call fails. This keeps interactions snappy without sacrificing correctness.
 
-**App/Index split for testability:** `src/app.ts` creates the Express app; `src/index.ts` creates the HTTP server. This lets Vitest + Supertest import the app without binding a port.
-
-**Tradeoffs made:**
-- No refresh tokens — 24h JWT expiry is a balance between security and UX
-- Dark mode applies the `dark` class on `<html>` via Tailwind's class strategy; persists in localStorage and respects `prefers-color-scheme` on first visit
-- Kanban board uses `@dnd-kit` with pointer sensor (8px drag threshold) to avoid accidental drags on click
+**App/index split for testability**
+`src/app.ts` creates the Express app; `src/index.ts` binds the HTTP server. Vitest + Supertest can import the app without occupying a port.
 
 ---
 
 ## What I'd Do With More Time
 
-1. **Real-time updates** — WebSocket or SSE for live task changes across tabs
-2. **Email notifications** — task assignment emails via a queue (BullMQ + SMTP)
-3. **Rate limiting** — `express-rate-limit` on auth endpoints to prevent brute-force
-4. **Refresh token rotation** — short-lived access tokens + long-lived refresh tokens in HttpOnly cookies
-5. **Drag-and-drop ordering within columns** — tasks currently only move between columns, not reorder within a column
-6. **More test coverage** — project CRUD, task CRUD, authorization edge cases
+### State Management
+The current context + hooks approach works well at this scale. With more users and real-time requirements, the next step would be **Zustand** for lightweight global state (simpler than Redux, no boilerplate) or **Redux Toolkit** if the data graph grows complex enough to warrant normalized slices and selectors. A `taskSlice` and `projectSlice` with RTK Query handling API cache invalidation would be the target architecture.
+
+### Real-time Updates
+WebSocket or Server-Sent Events so task changes made by one user appear live for others viewing the same project — without a page refresh.
+
+### Auth Hardening
+- Refresh token rotation: short-lived access tokens (15 min) + long-lived refresh tokens in HttpOnly cookies
+- Rate limiting on auth endpoints (`express-rate-limit`) to block brute-force attempts
+
+### Notifications
+Task assignment emails via a background queue (BullMQ + SMTP/SendGrid).
+
+### Drag-and-drop Reordering
+Tasks currently move between columns but can't be reordered within a column. Adding an `order` field to `Task` and a `PATCH /tasks/:id/reorder` endpoint would enable this.
+
+### Test Coverage
+Current tests cover auth only. Project CRUD, task CRUD, authorization edge cases (non-owner deletes, cross-project access), and pagination boundary conditions are the next areas to cover.
