@@ -163,15 +163,74 @@ Pre-seeded with one project ("Website Redesign") and four tasks spread across di
 
 ## Running Tests
 
+Tests are **integration tests** — they run against a real PostgreSQL database, not mocks. You need a running Postgres instance before running the suite.
+
+### Prerequisites
+
+- Node.js 20+
+- A running PostgreSQL instance (can be the same one used for local dev)
+- Dependencies installed: `cd backend && npm install`
+
+### 1. Configure the test environment
+
+The test runner loads `backend/.env.test` automatically (via `vitest.config.ts` → `src/__tests__/setup.ts`). Copy the example and point it at your test database:
+
 ```bash
-cd backend
-npm test
+# From the repo root
+cp backend/.env.example backend/.env.test
 ```
 
-9 integration tests covering:
-- `POST /auth/register` — success, duplicate email, missing fields
-- `POST /auth/login` — success, wrong password, unknown email
-- `GET /projects` — 401 without token, 401 with bad token, 200 with valid token
+Then edit `backend/.env.test` and set:
+
+```env
+DATABASE_URL=postgresql://<user>:<password>@localhost:5432/<test_dbname>?schema=public
+ACCESS_SECRET_TOKEN=any_string_at_least_32_characters_long
+JWT_EXPIRES_IN=1h
+PORT=8099
+NODE_ENV=test
+BCRYPT_ROUNDS=12
+```
+
+> Use a **separate database** from your development database (`<test_dbname>` ≠ your dev db). The test suite cleans up after itself, but running against dev data risks accidental deletions.
+
+### 2. Apply migrations to the test database
+
+```bash
+cd backend
+DATABASE_URL=<your_test_db_url> npx prisma migrate deploy
+```
+
+### 3. Run the test suite
+
+```bash
+cd backend
+
+# Run all tests once (CI mode)
+npm test
+
+# Run in watch mode — re-runs on file changes during development
+npx vitest
+
+# Run a single test file
+npx vitest src/__tests__/auth.test.ts
+
+# Run with verbose output (shows each test name)
+npx vitest run --reporter=verbose
+```
+
+### What is covered
+
+| Suite | Tests | What is verified |
+|---|---|---|
+| `POST /auth/register` | 3 | Success (201 + token), duplicate email (409), missing fields (400 + field errors) |
+| `POST /auth/login` | 3 | Success (200 + token), wrong password (401), unknown email (401) |
+| `GET /projects` (auth guard) | 3 | No token (401), malformed token (401), valid token (200 + data array) |
+
+**Total: 9 integration tests** — all run against a live database with real bcrypt hashing and JWT signing. The `testTimeout` is set to 15 s to accommodate bcrypt cost on slower machines.
+
+### Cleanup
+
+The test suite automatically deletes all rows it creates (`test_*` email prefix) in an `afterAll` hook — tasks → projects → users, in foreign-key-safe order. No manual cleanup is needed between runs.
 
 ---
 
@@ -203,8 +262,8 @@ All endpoints prefixed with `/api/v1`.
 |---|---|---|
 | GET | `/projects/:id/tasks` | Filterable: `?status=&assignee=&page=1&limit=20` |
 | POST | `/projects/:id/tasks` | Create a task |
-| PATCH | `/tasks/:id` | Update status, priority, assignee, etc. |
-| DELETE | `/tasks/:id` | Project owner or task creator only, returns 204 |
+| PATCH | `/tasks/:id` | Project owner or task creator only |
+| DELETE | `/tasks/:id` | Project owner or task creator only |
 
 **Example — login and fetch projects:**
 
