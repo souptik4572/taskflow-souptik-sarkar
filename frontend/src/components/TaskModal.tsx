@@ -5,6 +5,7 @@ import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Textarea } from './ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { DatePicker } from './DatePicker'
 import type { Task, TaskPriority, TaskStatus, User } from '../lib/types'
 
 interface TaskModalProps {
@@ -147,11 +148,11 @@ export function TaskModal({
 
             <div className="space-y-1.5">
               <Label htmlFor="task-due">Due Date</Label>
-              <Input
+              <DatePicker
                 id="task-due"
-                type="date"
                 value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
+                onChange={setDueDate}
+                placeholder="Pick a date"
               />
             </div>
           </div>

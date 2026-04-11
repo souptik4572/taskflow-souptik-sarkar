@@ -11,8 +11,8 @@ import { LoadingSpinner } from '../components/LoadingSpinner'
 import { StatusBadge } from '../components/StatusBadge'
 import { PriorityBadge } from '../components/PriorityBadge'
 import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
 import { Textarea } from '../components/ui/textarea'
+import { DatePicker } from '../components/DatePicker'
 import {
   Select,
   SelectContent,
@@ -336,21 +336,16 @@ export default function TaskDetailPage() {
               <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Due Date
               </label>
-              <Input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                className="w-full"
-                disabled={!canEdit}
-              />
-              {canEdit && dueDate && (
-                <button
-                  type="button"
-                  onClick={() => setDueDate('')}
-                  className="text-xs text-muted-foreground hover:text-destructive transition-colors"
-                >
-                  Clear date
-                </button>
+              {canEdit ? (
+                <DatePicker
+                  value={dueDate}
+                  onChange={setDueDate}
+                  placeholder="Pick a date"
+                />
+              ) : (
+                <p className="text-sm text-foreground">
+                  {dueDate ? format(new Date(`${dueDate}T00:00:00`), 'MMM d, yyyy') : '—'}
+                </p>
               )}
             </div>
 

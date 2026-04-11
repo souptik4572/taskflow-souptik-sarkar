@@ -295,6 +295,7 @@ export default function ProjectDetailPage() {
       />
 
       <TaskModal
+        key={editTask?.id ?? 'edit-task'}
         open={editTask !== null}
         onClose={() => setEditTask(null)}
         task={editTask ?? undefined}
@@ -313,6 +314,7 @@ export default function ProjectDetailPage() {
       />
 
       <ProjectModal
+        key={project.id}
         open={editProjectOpen}
         onClose={() => setEditProjectOpen(false)}
         project={project}
