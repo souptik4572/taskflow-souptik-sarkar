@@ -100,9 +100,18 @@ export async function getById(req: Request, res: Response): Promise<void> {
 
 export async function update(req: Request, res: Response): Promise<void> {
   const taskId = String(req.params['id'])
-  const task = await prisma.task.findUnique({ where: { id: taskId } })
+  const task = await prisma.task.findUnique({
+    where: { id: taskId },
+    include: { project: { select: { ownerId: true } } },
+  })
   if (!task) {
     sendError(res, messages.common.notFound, StatusCodes.NOT_FOUND)
+    return
+  }
+
+  const userId = req.user!.id
+  if (task.project.ownerId !== userId && task.creatorId !== userId) {
+    sendError(res, messages.common.forbidden, StatusCodes.FORBIDDEN)
     return
   }
 

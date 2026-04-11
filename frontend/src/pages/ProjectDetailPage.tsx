@@ -247,6 +247,7 @@ export default function ProjectDetailPage() {
             tasks={filteredTasks}
             onTaskClick={(task) => navigate(`/projects/${id}/tasks/${task.id}`)}
             onTaskEdit={(task) => setEditTask(task)}
+            canEditTask={(task) => isOwner || task.creatorId === user?.id}
             onStatusChange={async (taskId, status: TaskStatus) => {
               await updateTaskStatusOptimistic(taskId, status)
             }}
@@ -271,7 +272,7 @@ export default function ProjectDetailPage() {
                 key={task.id}
                 task={task}
                 onClick={() => navigate(`/projects/${id}/tasks/${task.id}`)}
-                onEdit={() => setEditTask(task)}
+                onEdit={isOwner || task.creatorId === user?.id ? () => setEditTask(task) : undefined}
               />
             ))}
           </div>

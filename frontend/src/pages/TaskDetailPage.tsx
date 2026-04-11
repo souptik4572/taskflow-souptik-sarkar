@@ -27,11 +27,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from '../components/ui/dialog'
+import { useAuth } from '../context/AuthContext'
 import type { Task, TaskStatus, TaskPriority, Project, User } from '../lib/types'
 
 export default function TaskDetailPage() {
   const { projectId, taskId } = useParams<{ projectId: string; taskId: string }>()
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   // Remote data
   const [task, setTask] = useState<Task | null>(null)
@@ -156,6 +158,8 @@ export default function TaskDetailPage() {
     )
   }
 
+  const canEdit = !!user && (user.id === task.creatorId || user.id === project?.ownerId)
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -188,33 +192,36 @@ export default function TaskDetailPage() {
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              readOnly={!canEdit}
               placeholder="Task title"
-              className="w-full bg-transparent border-b-2 border-transparent focus:border-primary/60 focus:outline-none text-2xl sm:text-3xl font-bold font-heading py-1 transition-colors placeholder:text-muted-foreground/50"
+              className="w-full bg-transparent border-b-2 border-transparent focus:border-primary/60 focus:outline-none text-2xl sm:text-3xl font-bold font-heading py-1 transition-colors placeholder:text-muted-foreground/50 read-only:cursor-default read-only:focus:border-transparent"
             />
           </div>
-          <div className="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
-            {isDirty && (
-              <span className="text-xs text-muted-foreground italic w-full sm:w-auto text-right sm:text-left">
-                Unsaved changes
-              </span>
-            )}
-            <Button
-              onClick={handleSave}
-              disabled={!isDirty || isSaving}
-              className="flex-1 sm:flex-none"
-            >
-              <Save className="w-4 h-4" />
-              {isSaving ? 'Saving…' : 'Save Changes'}
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={() => setDeleteOpen(true)}
-              className="flex-1 sm:flex-none"
-            >
-              <Trash2 className="w-4 h-4" />
-              Delete
-            </Button>
-          </div>
+          {canEdit && (
+            <div className="flex items-center gap-2 shrink-0 flex-wrap sm:flex-nowrap">
+              {isDirty && (
+                <span className="text-xs text-muted-foreground italic w-full sm:w-auto text-right sm:text-left">
+                  Unsaved changes
+                </span>
+              )}
+              <Button
+                onClick={handleSave}
+                disabled={!isDirty || isSaving}
+                className="flex-1 sm:flex-none"
+              >
+                <Save className="w-4 h-4" />
+                {isSaving ? 'Saving…' : 'Save Changes'}
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => setDeleteOpen(true)}
+                className="flex-1 sm:flex-none"
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Two-column layout: main content + metadata sidebar */}
@@ -232,6 +239,7 @@ export default function TaskDetailPage() {
                 placeholder="Add a description for this task…"
                 rows={7}
                 className="resize-none"
+                disabled={!canEdit}
               />
             </div>
 
@@ -275,7 +283,7 @@ export default function TaskDetailPage() {
               <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Status
               </label>
-              <Select value={status} onValueChange={(v) => setStatus(v as TaskStatus)}>
+              <Select value={status} onValueChange={(v) => setStatus(v as TaskStatus)} disabled={!canEdit}>
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
@@ -291,7 +299,7 @@ export default function TaskDetailPage() {
               <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Priority
               </label>
-              <Select value={priority} onValueChange={(v) => setPriority(v as TaskPriority)}>
+              <Select value={priority} onValueChange={(v) => setPriority(v as TaskPriority)} disabled={!canEdit}>
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
@@ -308,7 +316,7 @@ export default function TaskDetailPage() {
                 <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                   Assignee
                 </label>
-                <Select value={assigneeId} onValueChange={setAssigneeId}>
+                <Select value={assigneeId} onValueChange={setAssigneeId} disabled={!canEdit}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Unassigned" />
                   </SelectTrigger>
@@ -333,8 +341,9 @@ export default function TaskDetailPage() {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 className="w-full"
+                disabled={!canEdit}
               />
-              {dueDate && (
+              {canEdit && dueDate && (
                 <button
                   type="button"
                   onClick={() => setDueDate('')}

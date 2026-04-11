@@ -125,10 +125,11 @@ interface KanbanBoardProps {
   tasks: Task[]
   onTaskClick: (task: Task) => void
   onTaskEdit?: (task: Task) => void
+  canEditTask?: (task: Task) => boolean
   onStatusChange: (taskId: string, status: TaskStatus) => Promise<void>
 }
 
-export function KanbanBoard({ tasks, onTaskClick, onTaskEdit, onStatusChange }: KanbanBoardProps) {
+export function KanbanBoard({ tasks, onTaskClick, onTaskEdit, canEditTask, onStatusChange }: KanbanBoardProps) {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
 
   const sensors = useSensors(
@@ -204,7 +205,7 @@ export function KanbanBoard({ tasks, onTaskClick, onTaskEdit, onStatusChange }: 
                       key={task.id}
                       task={task}
                       onClick={() => onTaskClick(task)}
-                      onEdit={onTaskEdit ? () => onTaskEdit(task) : undefined}
+                      onEdit={onTaskEdit && (!canEditTask || canEditTask(task)) ? () => onTaskEdit(task) : undefined}
                     />
                   ))}
                 </SortableContext>
