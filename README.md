@@ -21,6 +21,12 @@ Use the [test credentials](#test-credentials) below to log straight in — no re
 
 ---
 
+## Language Choice
+
+The spec recommends Go for the backend. I am less familiar with Golang backend API development, so I chose **Node.js + TypeScript** — a stack I know well and can deliver production-quality code in.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
