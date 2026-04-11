@@ -1,35 +1,31 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 import { useAuth } from '../context/AuthContext'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { CheckSquare } from 'lucide-react'
-import axios from 'axios'
+import { apiError } from '../lib/toast-utils'
 
 export default function LoginPage() {
   const { login } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!email || !password) {
-      setError('Email and password are required')
+      toast.error('Email and password are required')
       return
     }
     setIsLoading(true)
-    setError(null)
     try {
       await login(email, password)
+      toast.success('Welcome back!')
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.error ?? 'Login failed')
-      } else {
-        setError('An unexpected error occurred')
-      }
+      toast.error(apiError(err, 'Login failed'))
     } finally {
       setIsLoading(false)
     }
@@ -71,8 +67,6 @@ export default function LoginPage() {
                 autoComplete="current-password"
               />
             </div>
-
-            {error && <p className="text-sm text-destructive">{error}</p>}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Signing in…' : 'Sign in'}

@@ -1,23 +1,23 @@
 import { useState, useCallback } from 'react'
+import { toast } from 'sonner'
 import { api } from '../lib/api'
+import { apiError } from '../lib/toast-utils'
 import type { Task, TaskStatus } from '../lib/types'
 
 export function useTasks(projectId: string) {
   const [tasks, setTasks] = useState<Task[]>([])
   const [total, setTotal] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
   const fetchTasks = useCallback(
     async (filters?: { status?: string; assignee?: string; page?: number; limit?: number }) => {
       setIsLoading(true)
-      setError(null)
       try {
         const { data } = await api.tasks.list(projectId, { limit: 100, ...filters })
         setTasks(data.data)
         setTotal(data.total)
-      } catch {
-        setError('Failed to load tasks')
+      } catch (err: unknown) {
+        toast.error(apiError(err, 'Failed to load tasks'))
       } finally {
         setIsLoading(false)
       }
@@ -33,10 +33,16 @@ export function useTasks(projectId: string) {
       assigneeId?: string | null
       dueDate?: string | null
     }) => {
-      const { data: task } = await api.tasks.create(projectId, data)
-      setTasks((prev) => [task, ...prev])
-      setTotal((t) => t + 1)
-      return task
+      try {
+        const { data: task } = await api.tasks.create(projectId, data)
+        setTasks((prev) => [task, ...prev])
+        setTotal((t) => t + 1)
+        toast.success('Task created successfully')
+        return task
+      } catch (err: unknown) {
+        toast.error(apiError(err, 'Failed to create task'))
+        throw err
+      }
     },
     [projectId]
   )
@@ -53,9 +59,15 @@ export function useTasks(projectId: string) {
         dueDate?: string | null
       }
     ) => {
-      const { data } = await api.tasks.update(id, updates)
-      setTasks((prev) => prev.map((t) => (t.id === id ? data : t)))
-      return data
+      try {
+        const { data } = await api.tasks.update(id, updates)
+        setTasks((prev) => prev.map((t) => (t.id === id ? data : t)))
+        toast.success('Task updated successfully')
+        return data
+      } catch (err: unknown) {
+        toast.error(apiError(err, 'Failed to update task'))
+        throw err
+      }
     },
     []
   )
@@ -66,29 +78,34 @@ export function useTasks(projectId: string) {
       setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, status } : t)))
       try {
         await api.tasks.update(id, { status })
-      } catch {
+      } catch (err: unknown) {
         if (previous) {
           setTasks((prev) =>
             prev.map((t) => (t.id === id ? { ...t, status: previous.status } : t))
           )
         }
-        throw new Error('Failed to update task status')
+        toast.error(apiError(err, 'Failed to update task status'))
       }
     },
     [tasks]
   )
 
   const deleteTask = useCallback(async (id: string) => {
-    await api.tasks.delete(id)
-    setTasks((prev) => prev.filter((t) => t.id !== id))
-    setTotal((t) => t - 1)
+    try {
+      await api.tasks.delete(id)
+      setTasks((prev) => prev.filter((t) => t.id !== id))
+      setTotal((t) => t - 1)
+      toast.success('Task deleted successfully')
+    } catch (err: unknown) {
+      toast.error(apiError(err, 'Failed to delete task'))
+      throw err
+    }
   }, [])
 
   return {
     tasks,
     total,
     isLoading,
-    error,
     fetchTasks,
     createTask,
     updateTask,

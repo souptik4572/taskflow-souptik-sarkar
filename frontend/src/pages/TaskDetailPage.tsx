@@ -3,7 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { ChevronRight, Trash2, Save, ArrowLeft } from 'lucide-react'
 import { format } from 'date-fns'
 import axios from 'axios'
+import { toast } from 'sonner'
 import { api } from '../lib/api'
+import { apiError } from '../lib/toast-utils'
 import { Navbar } from '../components/Navbar'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import { StatusBadge } from '../components/StatusBadge'
@@ -48,10 +50,8 @@ export default function TaskDetailPage() {
 
   // UI state
   const [isSaving, setIsSaving] = useState(false)
-  const [saveError, setSaveError] = useState<string | null>(null)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const initForm = useCallback((t: Task) => {
     setTitle(t.title)
@@ -104,9 +104,8 @@ export default function TaskDetailPage() {
 
   async function handleSave() {
     if (!task || !isDirty) return
-    if (!title.trim()) { setSaveError('Title cannot be empty'); return }
+    if (!title.trim()) { toast.error('Title cannot be empty'); return }
     setIsSaving(true)
-    setSaveError(null)
     try {
       const { data: updated } = await api.tasks.update(task.id, {
         title: title.trim(),
@@ -118,8 +117,9 @@ export default function TaskDetailPage() {
       })
       setTask(updated)
       initForm(updated)
-    } catch {
-      setSaveError('Failed to save changes. Please try again.')
+      toast.success('Task updated successfully')
+    } catch (err: unknown) {
+      toast.error(apiError(err, 'Failed to save changes'))
     } finally {
       setIsSaving(false)
     }
@@ -128,12 +128,12 @@ export default function TaskDetailPage() {
   async function handleDelete() {
     if (!task) return
     setIsDeleting(true)
-    setDeleteError(null)
     try {
       await api.tasks.delete(task.id)
+      toast.success('Task deleted successfully')
       navigate(`/projects/${projectId}`)
-    } catch {
-      setDeleteError('Failed to delete task. Please try again.')
+    } catch (err: unknown) {
+      toast.error(apiError(err, 'Failed to delete task'))
     } finally {
       setIsDeleting(false)
     }
@@ -216,10 +216,6 @@ export default function TaskDetailPage() {
             </Button>
           </div>
         </div>
-
-        {saveError && (
-          <p className="text-sm text-destructive mb-4">{saveError}</p>
-        )}
 
         {/* Two-column layout: main content + metadata sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-5">
@@ -372,10 +368,6 @@ export default function TaskDetailPage() {
               This action cannot be undone.
             </p>
           </div>
-
-          {deleteError && (
-            <p className="text-sm text-destructive">{deleteError}</p>
-          )}
 
           <DialogFooter>
             <Button

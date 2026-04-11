@@ -21,17 +21,15 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
   const navigate = useNavigate()
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   async function handleDelete() {
     if (!onDelete) return
     setIsDeleting(true)
-    setDeleteError(null)
     try {
       await onDelete()
       setDeleteOpen(false)
     } catch {
-      setDeleteError('Failed to delete project. Please try again.')
+      // toast fired by useProjects.deleteProject
     } finally {
       setIsDeleting(false)
     }
@@ -101,10 +99,6 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
               This action cannot be undone.
             </p>
           </div>
-
-          {deleteError && (
-            <p className="text-sm text-destructive">{deleteError}</p>
-          )}
 
           <DialogFooter>
             <Button

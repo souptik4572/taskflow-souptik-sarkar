@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '../components/ui/dialog'
+import { toast } from 'sonner'
 import { api } from '../lib/api'
 import { useTasks } from '../hooks/useTasks'
 import { useAuth } from '../context/AuthContext'
@@ -22,6 +23,7 @@ import { Button } from '../components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
 import type { Project, TaskStatus, User } from '../lib/types'
 import axios from 'axios'
+import { apiError } from '../lib/toast-utils'
 
 type ViewMode = 'list' | 'board'
 
@@ -44,7 +46,6 @@ export default function ProjectDetailPage() {
   const [editProjectOpen, setEditProjectOpen] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   const {
     tasks,
@@ -104,15 +105,13 @@ export default function ProjectDetailPage() {
   async function handleDeleteProject() {
     if (!project) return
     setIsDeleting(true)
-    setDeleteError(null)
     try {
       await api.projects.delete(project.id)
+      toast.success('Project deleted successfully')
       setDeleteOpen(false)
       navigate('/projects')
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setDeleteError(err.response?.data?.message ?? 'Failed to delete project')
-      }
+      toast.error(apiError(err, 'Failed to delete project'))
     } finally {
       setIsDeleting(false)
     }
@@ -176,12 +175,6 @@ export default function ProjectDetailPage() {
             </div>
           )}
         </div>
-
-        {deleteError && (
-          <div className="bg-destructive/10 text-destructive text-sm rounded-md px-4 py-2 mb-4">
-            {deleteError}
-          </div>
-        )}
 
         {/* Toolbar: filters + view toggle + add button */}
         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 mt-6 mb-4">
@@ -300,8 +293,14 @@ export default function ProjectDetailPage() {
         onClose={() => setEditProjectOpen(false)}
         project={project}
         onSubmit={async (data) => {
-          const { data: updated } = await api.projects.update(project.id, data)
-          setProject(updated)
+          try {
+            const { data: updated } = await api.projects.update(project.id, data)
+            setProject(updated)
+            toast.success('Project updated successfully')
+          } catch (err: unknown) {
+            toast.error(apiError(err, 'Failed to update project'))
+            throw err
+          }
         }}
       />
 
@@ -324,10 +323,6 @@ export default function ProjectDetailPage() {
               This action cannot be undone.
             </p>
           </div>
-
-          {deleteError && (
-            <p className="text-sm text-destructive">{deleteError}</p>
-          )}
 
           <DialogFooter>
             <Button

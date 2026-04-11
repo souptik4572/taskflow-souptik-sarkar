@@ -159,3 +159,172 @@
   transition: color 200ms ease, background-color 200ms ease,
               border-color 200ms ease, fill 200ms ease, stroke 200ms ease;
 }
+
+/* ─── Sonner toast — glassmorphic override ──────────────────────────────────
+   Matches the app's frosted-glass aesthetic.
+   Close button is repositioned to the top-right corner.
+   Each toast type gets a coloured left-border accent + tinted glass bg.    ── */
+
+[data-sonner-toaster] {
+  --border-radius: 14px;
+  --width: 356px;
+  /* Reposition close button: top-right instead of top-left */
+  --toast-close-button-start: auto;
+  --toast-close-button-end: 0;
+  --toast-close-button-transform: translate(35%, -35%);
+}
+
+/* ── Base glass surface ── */
+[data-sonner-toast] {
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  font-size: 0.875rem !important;
+  letter-spacing: -0.01em;
+}
+
+[data-sonner-toast] [data-title] {
+  font-weight: 500 !important;
+}
+
+[data-sonner-toast] [data-description] {
+  font-size: 0.8125rem !important;
+  opacity: 0.78;
+}
+
+/* ── Light mode — default / no type ── */
+[data-sonner-toast]:not([data-type]),
+[data-sonner-toast][data-type="default"] {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  color: hsl(222.2, 84%, 8%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+}
+
+/* ── Light mode — success ── */
+[data-sonner-toast][data-type="success"] {
+  background: rgba(240, 253, 244, 0.82) !important;
+  border: 1px solid rgba(134, 239, 172, 0.45) !important;
+  border-left: 3px solid hsl(142, 68%, 42%) !important;
+  color: hsl(142, 60%, 18%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ── Light mode — error ── */
+[data-sonner-toast][data-type="error"] {
+  background: rgba(255, 241, 242, 0.82) !important;
+  border: 1px solid rgba(252, 165, 165, 0.45) !important;
+  border-left: 3px solid hsl(0, 72%, 54%) !important;
+  color: hsl(0, 65%, 26%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ── Light mode — warning ── */
+[data-sonner-toast][data-type="warning"] {
+  background: rgba(255, 251, 235, 0.82) !important;
+  border: 1px solid rgba(253, 211, 100, 0.45) !important;
+  border-left: 3px solid hsl(38, 92%, 48%) !important;
+  color: hsl(32, 90%, 22%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ── Light mode — info ── */
+[data-sonner-toast][data-type="info"] {
+  background: rgba(239, 246, 255, 0.82) !important;
+  border: 1px solid rgba(147, 197, 253, 0.45) !important;
+  border-left: 3px solid hsl(217, 91%, 54%) !important;
+  color: hsl(217, 75%, 24%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ── Dark mode — default ── */
+.dark [data-sonner-toast]:not([data-type]),
+.dark [data-sonner-toast][data-type="default"] {
+  background: rgba(14, 10, 28, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  color: hsl(210, 40%, 94%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ── Dark mode — success ── */
+.dark [data-sonner-toast][data-type="success"] {
+  background: rgba(5, 28, 14, 0.88) !important;
+  border: 1px solid rgba(74, 222, 128, 0.20) !important;
+  border-left: 3px solid hsl(142, 68%, 44%) !important;
+  color: hsl(142, 68%, 70%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ── Dark mode — error ── */
+.dark [data-sonner-toast][data-type="error"] {
+  background: rgba(28, 5, 6, 0.88) !important;
+  border: 1px solid rgba(248, 113, 113, 0.20) !important;
+  border-left: 3px solid hsl(0, 80%, 56%) !important;
+  color: hsl(0, 80%, 72%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ── Dark mode — warning ── */
+.dark [data-sonner-toast][data-type="warning"] {
+  background: rgba(28, 20, 5, 0.88) !important;
+  border: 1px solid rgba(251, 191, 36, 0.20) !important;
+  border-left: 3px solid hsl(38, 92%, 52%) !important;
+  color: hsl(38, 92%, 68%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ── Dark mode — info ── */
+.dark [data-sonner-toast][data-type="info"] {
+  background: rgba(5, 14, 35, 0.88) !important;
+  border: 1px solid rgba(96, 165, 250, 0.20) !important;
+  border-left: 3px solid hsl(217, 91%, 58%) !important;
+  color: hsl(217, 91%, 72%) !important;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ── Close button — light ── */
+[data-sonner-toast] [data-close-button] {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: rgba(0, 0, 0, 0.45) !important;
+  transition: background 150ms ease, color 150ms ease !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ── Close button — dark ── */
+.dark [data-sonner-toast] [data-close-button] {
+  background: rgba(30, 22, 55, 0.90) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.dark [data-sonner-toast] [data-close-button]:hover {
+  background: rgba(48, 38, 80, 0.96) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}

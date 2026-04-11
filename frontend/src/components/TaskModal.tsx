@@ -43,16 +43,16 @@ export function TaskModal({
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [titleError, setTitleError] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!title.trim()) {
-      setError('Title is required')
+      setTitleError('Title is required')
       return
     }
+    setTitleError(null)
     setIsSubmitting(true)
-    setError(null)
     try {
       await onSubmit({
         title: title.trim(),
@@ -63,9 +63,8 @@ export function TaskModal({
         dueDate: dueDate || null,
       })
       onClose()
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Something went wrong'
-      setError(msg)
+    } catch {
+      // toast fired by the hook / caller
     } finally {
       setIsSubmitting(false)
     }
@@ -77,9 +76,8 @@ export function TaskModal({
     try {
       await onDelete()
       onClose()
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to delete task'
-      setError(msg)
+    } catch {
+      // toast fired by the hook / caller
     } finally {
       setIsDeleting(false)
     }
@@ -177,7 +175,7 @@ export function TaskModal({
             </div>
           )}
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {titleError && <p className="text-sm text-destructive">{titleError}</p>}
 
           <DialogFooter className="gap-2">
             {isEdit && onDelete && (

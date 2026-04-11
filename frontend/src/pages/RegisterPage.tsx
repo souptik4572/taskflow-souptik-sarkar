@@ -1,40 +1,36 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 import { useAuth } from '../context/AuthContext'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { CheckSquare } from 'lucide-react'
-import axios from 'axios'
+import { apiError } from '../lib/toast-utils'
 
 export default function RegisterPage() {
   const { register } = useAuth()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name || !email || !password) {
-      setError('All fields are required')
+      toast.error('All fields are required')
       return
     }
     if (password.length < 6) {
-      setError('Password must be at least 6 characters')
+      toast.error('Password must be at least 6 characters')
       return
     }
     setIsLoading(true)
-    setError(null)
     try {
       await register(name, email, password)
+      toast.success('Account created successfully!')
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.error ?? 'Registration failed')
-      } else {
-        setError('An unexpected error occurred')
-      }
+      toast.error(apiError(err, 'Registration failed'))
     } finally {
       setIsLoading(false)
     }
@@ -86,8 +82,6 @@ export default function RegisterPage() {
                 autoComplete="new-password"
               />
             </div>
-
-            {error && <p className="text-sm text-destructive">{error}</p>}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Creating account…' : 'Create account'}

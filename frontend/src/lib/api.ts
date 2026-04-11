@@ -16,7 +16,10 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    // Don't redirect on 401s from auth endpoints — those are expected (wrong credentials).
+    // Only redirect when an authenticated request is rejected (expired/missing token).
+    const isAuthEndpoint = (error.config?.url as string | undefined)?.includes('/auth/')
+    if (error.response?.status === 401 && !isAuthEndpoint) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       window.location.href = '/login'

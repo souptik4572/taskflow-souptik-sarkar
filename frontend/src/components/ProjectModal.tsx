@@ -17,24 +17,23 @@ export function ProjectModal({ open, onClose, onSubmit, project }: ProjectModalP
   const [name, setName] = useState(project?.name ?? '')
   const [description, setDescription] = useState(project?.description ?? '')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [nameError, setNameError] = useState<string | null>(null)
 
   const isEdit = !!project
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim()) {
-      setError('Name is required')
+      setNameError('Name is required')
       return
     }
+    setNameError(null)
     setIsSubmitting(true)
-    setError(null)
     try {
       await onSubmit({ name: name.trim(), description: description.trim() || undefined })
       onClose()
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Something went wrong'
-      setError(msg)
+    } catch {
+      // toast fired by the hook / caller
     } finally {
       setIsSubmitting(false)
     }
@@ -71,7 +70,7 @@ export function ProjectModal({ open, onClose, onSubmit, project }: ProjectModalP
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {nameError && <p className="text-sm text-destructive">{nameError}</p>}
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>

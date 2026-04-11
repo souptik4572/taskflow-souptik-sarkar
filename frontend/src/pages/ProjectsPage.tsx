@@ -10,7 +10,7 @@ import { LoadingSpinner } from '../components/LoadingSpinner'
 import { Button } from '../components/ui/button'
 
 export default function ProjectsPage() {
-  const { projects, isLoading, error, fetchProjects, createProject, deleteProject } = useProjects()
+  const { projects, isLoading, fetchProjects, createProject, deleteProject } = useProjects()
   const { user } = useAuth()
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -31,12 +31,6 @@ export default function ProjectsPage() {
             New Project
           </Button>
         </div>
-
-        {error && (
-          <div className="bg-destructive/10 text-destructive text-sm rounded-md px-4 py-3 mb-4">
-            {error}
-          </div>
-        )}
 
         {projects.length === 0 ? (
           <EmptyState
