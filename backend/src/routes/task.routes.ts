@@ -279,12 +279,8 @@ router.post('/projects/:id/tasks', create)
  *           type: string
  *           format: uuid
  *     responses:
- *       200:
- *         description: Task deleted
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
+ *       204:
+ *         description: Task deleted — no content
  *       401:
  *         description: Unauthorized
  *         content:

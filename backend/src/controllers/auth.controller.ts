@@ -3,20 +3,14 @@ import { StatusCodes } from 'http-status-codes'
 import { prisma } from '../config/database.js'
 import { hashPassword, comparePassword } from '../helpers/password.helper.js'
 import { signToken } from '../helpers/jwt.helper.js'
-import { sendSuccess, sendError } from '../helpers/response.helper.js'
+import { sendSuccess, sendError, formatJoiErrors } from '../helpers/response.helper.js'
 import { registerSchema, loginSchema } from '../validations/auth.validation.js'
 import { messages } from '../config/messages.js'
 
 export async function register(req: Request, res: Response): Promise<void> {
   const { error, value } = registerSchema.validate(req.body, { abortEarly: false })
   if (error) {
-    const fields: Record<string, string> = {}
-    for (const detail of error.details) {
-      if (detail.context?.key) {
-        fields[detail.context.key] = detail.message.replace(/['"]/g, '')
-      }
-    }
-    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, formatJoiErrors(error))
     return
   }
 
@@ -39,13 +33,7 @@ export async function register(req: Request, res: Response): Promise<void> {
 export async function login(req: Request, res: Response): Promise<void> {
   const { error, value } = loginSchema.validate(req.body, { abortEarly: false })
   if (error) {
-    const fields: Record<string, string> = {}
-    for (const detail of error.details) {
-      if (detail.context?.key) {
-        fields[detail.context.key] = detail.message.replace(/['"]/g, '')
-      }
-    }
-    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, formatJoiErrors(error))
     return
   }
 

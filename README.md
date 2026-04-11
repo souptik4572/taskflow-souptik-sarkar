@@ -266,7 +266,7 @@ All endpoints prefixed with `/api/v1`.
 | POST | `/projects` | Create a project |
 | GET | `/projects/:id` | Project + tasks |
 | PATCH | `/projects/:id` | Owner only |
-| DELETE | `/projects/:id` | Owner only, returns 204 |
+| DELETE | `/projects/:id` | Owner only — 204 No Content |
 | GET | `/projects/:id/stats` | `{byStatus, byAssignee}` |
 
 ### Tasks (Bearer token required)

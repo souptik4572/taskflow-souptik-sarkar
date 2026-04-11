@@ -2,7 +2,7 @@ import type { Request, Response } from 'express'
 import type { TaskStatus, TaskPriority } from '@prisma/client'
 import { StatusCodes } from 'http-status-codes'
 import { prisma } from '../config/database.js'
-import { sendSuccess, sendError } from '../helpers/response.helper.js'
+import { sendSuccess, sendError, formatJoiErrors } from '../helpers/response.helper.js'
 import { createSchema, updateSchema, listQuerySchema } from '../validations/task.validation.js'
 import { messages } from '../config/messages.js'
 
@@ -57,13 +57,7 @@ export async function create(req: Request, res: Response): Promise<void> {
 
   const { error, value } = createSchema.validate(req.body, { abortEarly: false })
   if (error) {
-    const fields: Record<string, string> = {}
-    for (const detail of error.details) {
-      if (detail.context?.key) {
-        fields[detail.context.key] = detail.message.replace(/['"]/g, '')
-      }
-    }
-    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, formatJoiErrors(error))
     return
   }
 
@@ -117,13 +111,7 @@ export async function update(req: Request, res: Response): Promise<void> {
 
   const { error, value } = updateSchema.validate(req.body, { abortEarly: false })
   if (error) {
-    const fields: Record<string, string> = {}
-    for (const detail of error.details) {
-      if (detail.context?.key) {
-        fields[detail.context.key] = detail.message.replace(/['"]/g, '')
-      }
-    }
-    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, fields)
+    sendError(res, messages.common.validationFailed, StatusCodes.BAD_REQUEST, formatJoiErrors(error))
     return
   }
 
@@ -166,5 +154,5 @@ export async function deleteTask(req: Request, res: Response): Promise<void> {
   }
 
   await prisma.task.delete({ where: { id: task.id } })
-  sendSuccess(res, null, StatusCodes.OK, messages.task.deleted)
+  res.status(StatusCodes.NO_CONTENT).end()
 }

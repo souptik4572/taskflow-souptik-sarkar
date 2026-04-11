@@ -297,12 +297,8 @@ router.get('/:id/stats', getStats)
  *           type: string
  *           format: uuid
  *     responses:
- *       200:
- *         description: Project deleted
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
+ *       204:
+ *         description: Project deleted — no content
  *       401:
  *         description: Unauthorized
  *         content:

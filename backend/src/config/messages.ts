@@ -4,16 +4,16 @@
  */
 export const messages = {
   common: {
-    validationFailed: 'Validation failed',
-    notFound: 'Resource not found',
-    forbidden: 'Access denied',
-    internalError: 'Internal server error',
+    validationFailed: 'validation failed',
+    notFound: 'not found',
+    forbidden: 'forbidden',
+    internalError: 'internal server error',
   },
   auth: {
     registered: 'Registration successful',
     loggedIn: 'Login successful',
-    emailInUse: 'Email address is already in use',
-    invalidCredentials: 'Invalid email or password',
+    emailInUse: 'email already in use',
+    invalidCredentials: 'invalid credentials',
   },
   project: {
     listed: 'Projects retrieved successfully',
