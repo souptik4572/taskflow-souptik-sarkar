@@ -17,6 +17,16 @@ async function main() {
     },
   })
 
+  const alternateUser = await prisma.user.upsert({
+    where: { email: 'testAlternate@gmail.com' },
+    update: {},
+    create: {
+      name: 'Test Alternate',
+      email: 'testAlternate@gmail.com',
+      password: passwordHash,
+    },
+  })
+
   const project = await prisma.project.upsert({
     where: { id: '00000000-0000-0000-0000-000000000001' },
     update: {},
@@ -68,6 +78,21 @@ async function main() {
       projectId: project.id,
       assigneeId: user.id,
       creatorId: user.id,
+    },
+  })
+
+  await prisma.task.upsert({
+    where: { id: '00000000-0000-0000-0000-000000000013' },
+    update: {},
+    create: {
+      id: '00000000-0000-0000-0000-000000000013',
+      title: 'Set up CI/CD pipeline',
+      status: 'todo',
+      priority: 'medium',
+      projectId: project.id,
+      assigneeId: alternateUser.id,
+      creatorId: user.id,
+      dueDate: new Date('2026-05-01'),
     },
   })
 
