@@ -41,11 +41,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
     container_name: taskfow-souptik-frontend
-    env_file:
-      - .env
-    environment:
-      VITE_API_URL: ${VITE_API_URL}
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT}:80"
