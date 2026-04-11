@@ -4,6 +4,23 @@ A full-stack task management app. Register, log in, create projects, add tasks, 
 
 ---
 
+## Live Deployment
+
+The app is fully deployed and publicly accessible.
+
+| Service | URL |
+|---|---|
+| Frontend (Netlify) | https://taskflow-souptik.netlify.app |
+| Backend API (Heroku) | https://taskflow-souptik-acfb3c2f0786.herokuapp.com/api/v1 |
+| Swagger API docs | https://taskflow-souptik-acfb3c2f0786.herokuapp.com/api-docs |
+| Health check | https://taskflow-souptik-acfb3c2f0786.herokuapp.com/health |
+
+> **Stack:** Frontend on Netlify, backend on Heroku, database on Neon (serverless PostgreSQL).
+
+Use the [test credentials](#test-credentials) below to log straight in — no registration required.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -47,6 +64,7 @@ That's it. On startup the backend container automatically:
 |---|---|
 | Frontend | http://localhost:3000 |
 | Backend API | http://localhost:8000/api/v1 |
+| Swagger API docs | http://localhost:8000/api-docs |
 | Health check | http://localhost:8000/health |
 
 To stop: `docker compose down`
