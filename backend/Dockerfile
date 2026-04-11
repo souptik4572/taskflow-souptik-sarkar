@@ -1,6 +1,8 @@
 # Stage 1: builder
 FROM node:20-alpine AS builder
 
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -10,13 +12,15 @@ RUN npm ci
 
 RUN npx prisma generate
 
-COPY tsconfig.json ./
+COPY tsconfig.json tsconfig.seed.json ./
 COPY src ./src/
 
 RUN npm run build
 
 # Stage 2: runtime
 FROM node:20-alpine AS runtime
+
+RUN apk add --no-cache openssl
 
 WORKDIR /app
 
