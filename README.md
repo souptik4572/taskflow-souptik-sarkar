@@ -155,9 +155,22 @@ Runs `prisma migrate deploy` — applies any pending migration files in order. S
 | User | Email | Password |
 |---|---|---|
 | Primary | test@example.com | password123 |
-| Alternate | testAlternate@gmail.com | password123 |
+| Alternate | testAlternate@example.com | password123 |
 
-Pre-seeded with one project ("Website Redesign") and four tasks spread across different statuses. The alternate user is assigned to the "Set up CI/CD pipeline" task.
+Pre-seeded with two projects and five tasks across different statuses and assignees:
+
+| Project | Owner |
+|---|---|
+| [Test User] Website Redesign | test@example.com |
+| [Test Alternate] Mobile App Launch | testAlternate@example.com |
+
+| Task | Project | Creator | Assignee | Status |
+|---|---|---|---|---|
+| [Test User → Test User] Design homepage mockups | Website Redesign | Test User | Test User | To Do |
+| [Test User → Test Alternate] Implement auth flow | Website Redesign | Test User | Test Alternate | In Progress |
+| [Test User → Test Alternate] Write API documentation | Website Redesign | Test User | Test Alternate | Done |
+| [Test Alternate → Test Alternate] Set up CI/CD pipeline | Mobile App Launch | Test Alternate | Test Alternate | To Do |
+| [Test Alternate → Test User] Configure push notifications | Mobile App Launch | Test Alternate | Test User | In Progress |
 
 ---
 
