@@ -32,6 +32,7 @@ export default function ProjectDetailPage() {
 
   const [project, setProject] = useState<Project | null>(null)
   const [projectMembers, setProjectMembers] = useState<User[]>([])
+  const [allUsers, setAllUsers] = useState<User[]>([])
   const [pageLoading, setPageLoading] = useState(true)
   const [pageError, setPageError] = useState<string | null>(null)
   const [viewMode, setViewMode] = useState<ViewMode>('list')
@@ -58,8 +59,12 @@ export default function ProjectDetailPage() {
     setPageLoading(true)
     setPageError(null)
     try {
-      const { data } = await api.projects.getById(id)
+      const [{ data }, usersRes] = await Promise.all([
+        api.projects.getById(id),
+        api.users.list(),
+      ])
       setProject(data)
+      setAllUsers(usersRes.data.data)
       const members = new Map<string, User>()
       if (data.owner) members.set(data.owner.id, data.owner)
       for (const task of data.tasks ?? []) {
@@ -287,7 +292,7 @@ export default function ProjectDetailPage() {
             dueDate: data.dueDate,
           })
         }}
-        projectMembers={projectMembers}
+        projectMembers={allUsers}
       />
 
       <ProjectModal

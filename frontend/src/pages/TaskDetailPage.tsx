@@ -68,22 +68,16 @@ export default function TaskDetailPage() {
       setPageLoading(true)
       setPageError(null)
       try {
-        const [taskRes, projectRes] = await Promise.all([
+        const [taskRes, projectRes, usersRes] = await Promise.all([
           api.tasks.getById(taskId!),
           api.projects.getById(projectId!),
+          api.users.list(),
         ])
         const t = taskRes.data
         const p = projectRes.data
         setTask(t)
         setProject(p)
-
-        // Derive unique project members from owner + task assignees
-        const members = new Map<string, User>()
-        if (p.owner) members.set(p.owner.id, p.owner)
-        for (const pt of p.tasks ?? []) {
-          if (pt.assignee) members.set(pt.assignee.id, pt.assignee)
-        }
-        setProjectMembers(Array.from(members.values()))
+        setProjectMembers(usersRes.data.data)
         initForm(t)
       } catch (err: unknown) {
         if (axios.isAxiosError(err) && err.response?.status === 404) {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AuthResponse, Project, Task } from './types'
+import type { AuthResponse, Project, Task, User } from './types'
 
 const BASE_URL = import.meta.env['VITE_API_URL'] ?? 'http://localhost:8000/api/v1'
 
@@ -82,5 +82,8 @@ export const api = {
       }
     ) => axiosInstance.patch<Task>(`/tasks/${id}`, data),
     delete: (id: string) => axiosInstance.delete(`/tasks/${id}`),
+  },
+  users: {
+    list: () => axiosInstance.get<{ data: User[] }>('/users'),
   },
 }
