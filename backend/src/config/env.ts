@@ -11,6 +11,7 @@ function requireEnv(name: string): string {
 export const config = {
   databaseUrl: requireEnv('DATABASE_URL'),
   accessSecretToken: requireEnv('ACCESS_SECRET_TOKEN'),
+  jwtExpiresIn: process.env['JWT_EXPIRES_IN'] ?? '24h',
   port: parseInt(process.env['PORT'] ?? '8000', 10),
   nodeEnv: process.env['NODE_ENV'] ?? 'development',
   bcryptRounds: parseInt(process.env['BCRYPT_ROUNDS'] ?? '12', 10),
