@@ -341,10 +341,27 @@ Status updates feel instant — the UI updates immediately and reverts with an e
 
 ---
 
-## What I'd Do With More Time
+## What I Would Do With More Time
+
+### Teams, Roles, and Scoped Access (Data Model Improvement)
+The biggest structural gap in the current design is that visibility is implicit — any authenticated user can see any project. A proper multi-tenant model would look like this:
+
+```
+User ──< TeamMember >── Team ──< Project ──< Task
+                          │
+                     (role: ADMIN | MEMBER)
+```
+
+- A new `Team` model with a `TeamMember` join table carrying a `role` enum (`ADMIN` | `MEMBER`)
+- An `ADMIN` can create the team, invite users, and remove members
+- Projects and tasks belong to a team, not directly to a user — so all access checks become `isMemberOf(team)` rather than `isOwner(project)`
+- New indexes on `TeamMember(teamId, userId)` and `Project(teamId)` to keep those membership checks fast
+- The auth middleware would be extended to resolve the active team from the request (header or path segment) and attach it to `req.team` alongside `req.user`
+
+This would make the permission model explicit, auditable, and scalable — rather than the current implicit "you see everything" approach.
 
 ### State Management
-The current context + hooks approach works well at this scale. With more users and real-time requirements, the next step would be **Zustand** for lightweight global state (simpler than Redux, no boilerplate) or **Redux Toolkit**
+The current context + hooks approach works well at this scale. With more users and real-time requirements, the next step would be **Zustand** for lightweight global state (simpler than Redux, no boilerplate) or **Redux Toolkit**.
 
 ### Real-time Updates
 WebSocket or Server-Sent Events so task changes made by one user appear live for others viewing the same project — without a page refresh.

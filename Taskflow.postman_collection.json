@@ -1,0 +1,2530 @@
+{
+  "info": {
+    "_postman_id": "5ec42c73-94b8-4966-92f1-20108b277e38",
+    "name": "Taskflow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "14121536"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login user",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/auth/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "269"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"10d-TvfeB2LF1rPBCop3hhRsh/0NtQE\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 15:32:07 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Login successful\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzMWU0MGY1Yy0yMjIzLTQ3ZDUtYTM5ZS1mMzg2N2E5YjJkNTIiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzUxMjcsImV4cCI6MTc3NTkyMTUyN30.WDZUfP__KK--cL0ms-WVSo3ALDTxxFpBpayDnIG0Kuo\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Register user",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Test One\",\n    \"email\": \"testOne@example.com\",\n    \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:8000/api/v1/auth/register",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Register user",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Test One\",\n    \"email\": \"testOne@example.com\",\n    \"password\": \"password123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/auth/register",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "337"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"151-dsBcrwW5YffoWlygBOXUmbfg68I\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 15:34:49 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Registration successful\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxNzBkNGM4MS1iMTAwLTRiNWUtYjJlYS1hYzk1ZjQ5MmI4Y2YiLCJlbWFpbCI6InRlc3RPbmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzUyODksImV4cCI6MTc3NTkyMTY4OX0.hWumbXldXxikRx4S6-lYsQArQqKoiVqgVo8DMDjtCQ0\",\n    \"user\": {\n        \"name\": \"Test One\",\n        \"email\": \"testOne@example.com\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Create project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzUyNTEsImV4cCI6MTc3NTkyMTY1MX0.y-8aLOj95PktdNm670nX_mNMLZTfCi6DHHzHJO0ZuIg"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Project Hail Mary\",\n    \"description\": \"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:8000/api/v1/projects' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzUyNTEsImV4cCI6MTc3NTkyMTY1MX0.y-8aLOj95PktdNm670nX_mNMLZTfCi6DHHzHJO0ZuIg' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'DNT: 1' \\\n  -H 'Origin: http://localhost:5173' \\\n  -H 'Referer: http://localhost:5173/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"' \\\n  --data-raw '{\"name\":\"Project Hail Mary\",\"description\":\"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\"}'"
+          },
+          "response": [
+            {
+              "name": "Create project",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzUyNTEsImV4cCI6MTc3NTkyMTY1MX0.y-8aLOj95PktdNm670nX_mNMLZTfCi6DHHzHJO0ZuIg"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Project Hail Mary\",\n    \"description\": \"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "316"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"13c-c/hXmWby5CqnQ9DCfrM5Jr7Mpa8\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 15:38:54 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Project created successfully\",\n    \"id\": \"d52354b8-edc1-4729-b8b8-07e4e7b94fef\",\n    \"name\": \"Project Hail Mary\",\n    \"description\": \"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\",\n    \"ownerId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n    \"createdAt\": \"2026-04-10T15:38:54.108Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get projects",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzUyNTEsImV4cCI6MTc3NTkyMTY1MX0.y-8aLOj95PktdNm670nX_mNMLZTfCi6DHHzHJO0ZuIg"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "If-None-Match",
+                "value": "W/\"55-pCvk2X0SwQQOlcmNyVXiEJKPqfg\""
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects?page=1&limit=20",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get projects",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzUyNTEsImV4cCI6MTc3NTkyMTY1MX0.y-8aLOj95PktdNm670nX_mNMLZTfCi6DHHzHJO0ZuIg"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "If-None-Match",
+                    "value": "W/\"55-pCvk2X0SwQQOlcmNyVXiEJKPqfg\""
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects?page=1&limit=20",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "381"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"17d-AoP7AhpdS4S96AFGSNhU61mrDLU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 15:47:45 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Projects retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": \"eaad06be-411b-444c-8f09-43500adfe707\",\n            \"name\": \"Project Hail Mary\",\n            \"description\": \"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\",\n            \"ownerId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n            \"createdAt\": \"2026-04-10T15:37:51.047Z\",\n            \"_count\": {\n                \"tasks\": 0\n            }\n        }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 20\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get project details + tasks list",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "If-None-Match",
+                "value": "W/\"1bb-f1PPZFbnxl76uvAy0VnCNqLlznk\"",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/00000000-0000-0000-0000-000000000001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "00000000-0000-0000-0000-000000000001"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get project details + tasks list",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "If-None-Match",
+                    "value": "W/\"1bb-f1PPZFbnxl76uvAy0VnCNqLlznk\"",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects/00000000-0000-0000-0000-000000000001",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects",
+                    "00000000-0000-0000-0000-000000000001"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "2333"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"91d-KwUNRzrOTG8j5mJAO7hxsIT8lRY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Apr 2026 02:54:24 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Project retrieved successfully\",\n    \"id\": \"00000000-0000-0000-0000-000000000001\",\n    \"name\": \"Website Redesign\",\n    \"description\": \"Q2 redesign project\",\n    \"ownerId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n    \"createdAt\": \"2026-04-10T13:51:14.629Z\",\n    \"tasks\": [\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000013\",\n            \"title\": \"Set up CI/CD pipeline\",\n            \"description\": null,\n            \"status\": \"todo\",\n            \"priority\": \"medium\",\n            \"projectId\": \"00000000-0000-0000-0000-000000000001\",\n            \"assigneeId\": \"c5c172eb-13b9-4c3a-86e9-27543d6dcdb1\",\n            \"creatorId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n            \"dueDate\": \"2026-05-01T00:00:00.000Z\",\n            \"createdAt\": \"2026-04-11T02:27:14.430Z\",\n            \"updatedAt\": \"2026-04-11T02:27:14.430Z\",\n            \"assignee\": {\n                \"id\": \"c5c172eb-13b9-4c3a-86e9-27543d6dcdb1\",\n                \"name\": \"Test Alternate\",\n                \"email\": \"testAlternate@gmail.com\"\n            }\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000012\",\n            \"title\": \"Write API documentation\",\n            \"description\": null,\n            \"status\": \"todo\",\n            \"priority\": \"low\",\n            \"projectId\": \"00000000-0000-0000-0000-000000000001\",\n            \"assigneeId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n            \"creatorId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n            \"dueDate\": null,\n            \"createdAt\": \"2026-04-10T13:51:14.637Z\",\n            \"updatedAt\": \"2026-04-10T14:49:35.242Z\",\n            \"assignee\": {\n                \"id\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n                \"name\": \"Test User\",\n                \"email\": \"test@example.com\"\n            }\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000011\",\n            \"title\": \"Implement auth flow\",\n            \"description\": \"Implement auth flow\",\n            \"status\": \"todo\",\n            \"priority\": \"medium\",\n            \"projectId\": \"00000000-0000-0000-0000-000000000001\",\n            \"assigneeId\": \"8fb1f763-bdd8-4cb1-a8fb-a1f0cf34f8b8\",\n            \"creatorId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n            \"dueDate\": null,\n            \"createdAt\": \"2026-04-10T13:51:14.636Z\",\n            \"updatedAt\": \"2026-04-11T01:53:38.032Z\",\n            \"assignee\": {\n                \"id\": \"8fb1f763-bdd8-4cb1-a8fb-a1f0cf34f8b8\",\n                \"name\": \"ABC\",\n                \"email\": \"abc@gmail.com\"\n            }\n        },\n        {\n            \"id\": \"00000000-0000-0000-0000-000000000010\",\n            \"title\": \"Design homepage\",\n            \"description\": null,\n            \"status\": \"done\",\n            \"priority\": \"high\",\n            \"projectId\": \"00000000-0000-0000-0000-000000000001\",\n            \"assigneeId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n            \"creatorId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n            \"dueDate\": \"2026-04-20T00:00:00.000Z\",\n            \"createdAt\": \"2026-04-10T13:51:14.632Z\",\n            \"updatedAt\": \"2026-04-10T14:49:32.587Z\",\n            \"assignee\": {\n                \"id\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n                \"name\": \"Test User\",\n                \"email\": \"test@example.com\"\n            }\n        }\n    ],\n    \"owner\": {\n        \"id\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n        \"name\": \"Test User\",\n        \"email\": \"test@example.com\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update project",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Project Hail Mary Updated\",\n    \"description\": \"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/eaad06be-411b-444c-8f09-43500adfe707",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "eaad06be-411b-444c-8f09-43500adfe707"
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:8000/api/v1/projects/eaad06be-411b-444c-8f09-43500adfe707' \\\n  -X 'PATCH' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo' \\\n  -H 'Connection: keep-alive' \\\n  -H 'Content-Type: application/json' \\\n  -H 'DNT: 1' \\\n  -H 'Origin: http://localhost:5173' \\\n  -H 'Referer: http://localhost:5173/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"' \\\n  --data-raw '{\"name\":\"Project Hail Mary Updated\",\"description\":\"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\"}'"
+          },
+          "response": [
+            {
+              "name": "Update project",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Project Hail Mary Updated\",\n    \"description\": \"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects/eaad06be-411b-444c-8f09-43500adfe707",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects",
+                    "eaad06be-411b-444c-8f09-43500adfe707"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "324"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"144-6Mc8ILXuCx5kEPvFCn/CAKvbsJQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 15:54:19 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Project updated successfully\",\n    \"id\": \"eaad06be-411b-444c-8f09-43500adfe707\",\n    \"name\": \"Project Hail Mary Updated\",\n    \"description\": \"A desperate mission to the Tau Ceti solar system in order to save mankind from eventual extinction\",\n    \"ownerId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n    \"createdAt\": \"2026-04-10T15:37:51.047Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete project",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/ef2ce5ef-dfae-4673-a55c-d638c5d6a3bb",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "ef2ce5ef-dfae-4673-a55c-d638c5d6a3bb"
+              ]
+            },
+            "description": "Generated from cURL: curl 'http://localhost:8000/api/v1/projects/eaad06be-411b-444c-8f09-43500adfe707' \\\n  -X 'DELETE' \\\n  -H 'Accept: application/json, text/plain, */*' \\\n  -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5' \\\n  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo' \\\n  -H 'Connection: keep-alive' \\\n  -H 'DNT: 1' \\\n  -H 'Origin: http://localhost:5173' \\\n  -H 'Referer: http://localhost:5173/' \\\n  -H 'Sec-Fetch-Dest: empty' \\\n  -H 'Sec-Fetch-Mode: cors' \\\n  -H 'Sec-Fetch-Site: same-site' \\\n  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36' \\\n  -H 'sec-ch-ua: \"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\"' \\\n  -H 'sec-ch-ua-mobile: ?0' \\\n  -H 'sec-ch-ua-platform: \"macOS\"'"
+          },
+          "response": [
+            {
+              "name": "Delete project",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects/ef2ce5ef-dfae-4673-a55c-d638c5d6a3bb",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects",
+                    "ef2ce5ef-dfae-4673-a55c-d638c5d6a3bb"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "54"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"36-jVnj6jqb3Ok5lq3H9LxFJ8zs/6c\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 15:56:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Project deleted successfully\",\n    \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get project statistics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzMWU0MGY1Yy0yMjIzLTQ3ZDUtYTM5ZS1mMzg2N2E5YjJkNTIiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4NzU5MzIsImV4cCI6MTc3NTk2MjMzMn0.FdigBe--BclT2-oIcqBInriOPAkOrr1Xjc6Kiv-0U9U",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer $TOKEN"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/00000000-0000-0000-0000-000000000001/stats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "00000000-0000-0000-0000-000000000001",
+                "stats"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get project statistics",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer $TOKEN"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects/00000000-0000-0000-0000-000000000001/stats",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects",
+                    "00000000-0000-0000-0000-000000000001",
+                    "stats"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "353"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"161-zOysb9rOPn3ooqohi7+0ThiMxdc\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Apr 2026 02:53:48 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Project statistics retrieved successfully\",\n    \"byStatus\": {\n        \"todo\": 3,\n        \"in_progress\": 0,\n        \"done\": 1\n    },\n    \"byAssignee\": [\n        {\n            \"userId\": \"31e40f5c-2223-47d5-a39e-f3867a9b2d52\",\n            \"name\": \"Test User\",\n            \"count\": 2\n        },\n        {\n            \"userId\": \"8fb1f763-bdd8-4cb1-a8fb-a1f0cf34f8b8\",\n            \"name\": \"ABC\",\n            \"count\": 1\n        },\n        {\n            \"userId\": \"c5c172eb-13b9-4c3a-86e9-27543d6dcdb1\",\n            \"name\": \"Test Alternate\",\n            \"count\": 1\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "Create task",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Recover Taumoeba from Adrian Atmosphere\",\n    \"description\": \"Taumoeba lives in the upper atmosphere of Adrian, where it preys on Astrophage at an altitude of approximately 91.2 km.  Rocky uses his ship, the Blip-A, to dive into the atmosphere to harvest the organism while staying in his specialized xenonite-shielded, ammonia-environment ship. Taumoeba can live in temperatures ranging from -180°C to 107°C but dies when exposed to nitrogen.\",\n    \"priority\": \"high\",\n    \"assigneeId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n    \"dueDate\": \"2026-04-10\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/e9253f6f-8018-4426-9d36-876e6c5f9a57/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "e9253f6f-8018-4426-9d36-876e6c5f9a57",
+                "tasks"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create task",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Recover Taumoeba from Adrian Atmosphere\",\n    \"description\": \"Taumoeba lives in the upper atmosphere of Adrian, where it preys on Astrophage at an altitude of approximately 91.2 km.  Rocky uses his ship, the Blip-A, to dive into the atmosphere to harvest the organism while staying in his specialized xenonite-shielded, ammonia-environment ship. Taumoeba can live in temperatures ranging from -180°C to 107°C but dies when exposed to nitrogen.\",\n    \"priority\": \"high\",\n    \"assigneeId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n    \"dueDate\": \"2026-04-10\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects/e9253f6f-8018-4426-9d36-876e6c5f9a57/tasks",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects",
+                    "e9253f6f-8018-4426-9d36-876e6c5f9a57",
+                    "tasks"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "953"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3b9-umC6xzwNFCW23XFPva6e0YMlWNk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 16:10:02 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Task created successfully\",\n    \"id\": \"8a8bb6aa-62f7-4cc0-a943-2f34d6b3b472\",\n    \"title\": \"Recover Taumoeba from Adrian Atmosphere\",\n    \"description\": \"Taumoeba lives in the upper atmosphere of Adrian, where it preys on Astrophage at an altitude of approximately 91.2 km.  Rocky uses his ship, the Blip-A, to dive into the atmosphere to harvest the organism while staying in his specialized xenonite-shielded, ammonia-environment ship. Taumoeba can live in temperatures ranging from -180°C to 107°C but dies when exposed to nitrogen.\",\n    \"status\": \"todo\",\n    \"priority\": \"high\",\n    \"projectId\": \"e9253f6f-8018-4426-9d36-876e6c5f9a57\",\n    \"assigneeId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n    \"creatorId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n    \"dueDate\": \"2026-04-10T00:00:00.000Z\",\n    \"createdAt\": \"2026-04-10T16:10:02.029Z\",\n    \"updatedAt\": \"2026-04-10T16:10:02.029Z\",\n    \"assignee\": {\n        \"id\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n        \"name\": \"Test Alternate\",\n        \"email\": \"testAlternate@example.com\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get tasks",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "If-None-Match",
+                "value": "W/\"77a-v4xoMC47LWebb4MzY8/pklY9my4\""
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/projects/e9253f6f-8018-4426-9d36-876e6c5f9a57/tasks?limit=100&status=todo",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "e9253f6f-8018-4426-9d36-876e6c5f9a57",
+                "tasks"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "key": "status",
+                  "value": "todo"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get tasks",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "If-None-Match",
+                    "value": "W/\"77a-v4xoMC47LWebb4MzY8/pklY9my4\""
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/projects/e9253f6f-8018-4426-9d36-876e6c5f9a57/tasks?limit=100&status=todo",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "projects",
+                    "e9253f6f-8018-4426-9d36-876e6c5f9a57",
+                    "tasks"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "todo"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "998"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3e6-0d7JLzLURvjOvJCYnnd98Urr+tk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 16:12:39 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Tasks retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": \"1c72dce4-386b-47ec-a89e-dcedc3a8f073\",\n            \"title\": \"Recover Taumoeba from Adrian Atmosphere\",\n            \"description\": \"Taumoeba lives in the upper atmosphere of Adrian, where it preys on Astrophage at an altitude of approximately 91.2 km.  Rocky uses his ship, the Blip-A, to dive into the atmosphere to harvest the organism while staying in his specialized xenonite-shielded, ammonia-environment ship. Taumoeba can live in temperatures ranging from -180°C to 107°C but dies when exposed to nitrogen.\",\n            \"status\": \"todo\",\n            \"priority\": \"high\",\n            \"projectId\": \"e9253f6f-8018-4426-9d36-876e6c5f9a57\",\n            \"assigneeId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n            \"creatorId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n            \"dueDate\": \"2026-04-10T00:00:00.000Z\",\n            \"createdAt\": \"2026-04-10T16:08:48.789Z\",\n            \"updatedAt\": \"2026-04-10T16:10:57.163Z\",\n            \"assignee\": {\n                \"id\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n                \"name\": \"Test Alternate\",\n                \"email\": \"testAlternate@example.com\"\n            }\n        }\n    ],\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 100\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update task",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Get alive out of Adrian's atmosphere\",\n    \"description\": \"Taumoeba lives in the upper atmosphere of Adrian, where it preys on Astrophage at an altitude of approximately 91.2 km.  Rocky uses his ship, the Blip-A, to dive into the atmosphere to harvest the organism while staying in his specialized xenonite-shielded, ammonia-environment ship. Taumoeba can live in temperatures ranging from -180°C to 107°C but dies when exposed to nitrogen.\",\n    \"status\": \"in_progress\",\n    \"priority\": \"low\",\n    \"assigneeId\": null,\n    \"dueDate\": \"2026-04-10\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/tasks/1c72dce4-386b-47ec-a89e-dcedc3a8f073",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "tasks",
+                "1c72dce4-386b-47ec-a89e-dcedc3a8f073"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update task",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Get alive out of Adrian's atmosphere\",\n    \"description\": \"Taumoeba lives in the upper atmosphere of Adrian, where it preys on Astrophage at an altitude of approximately 91.2 km.  Rocky uses his ship, the Blip-A, to dive into the atmosphere to harvest the organism while staying in his specialized xenonite-shielded, ammonia-environment ship. Taumoeba can live in temperatures ranging from -180°C to 107°C but dies when exposed to nitrogen.\",\n    \"status\": \"in_progress\",\n    \"priority\": \"low\",\n    \"assigneeId\": null,\n    \"dueDate\": \"2026-04-10\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/tasks/1c72dce4-386b-47ec-a89e-dcedc3a8f073",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "tasks",
+                    "1c72dce4-386b-47ec-a89e-dcedc3a8f073"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "821"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"335-DNvdUebCod8sWgRE6XEg8gQtRK4\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 16:14:08 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Task updated successfully\",\n    \"id\": \"1c72dce4-386b-47ec-a89e-dcedc3a8f073\",\n    \"title\": \"Get alive out of Adrian's atmosphere\",\n    \"description\": \"Taumoeba lives in the upper atmosphere of Adrian, where it preys on Astrophage at an altitude of approximately 91.2 km.  Rocky uses his ship, the Blip-A, to dive into the atmosphere to harvest the organism while staying in his specialized xenonite-shielded, ammonia-environment ship. Taumoeba can live in temperatures ranging from -180°C to 107°C but dies when exposed to nitrogen.\",\n    \"status\": \"in_progress\",\n    \"priority\": \"low\",\n    \"projectId\": \"e9253f6f-8018-4426-9d36-876e6c5f9a57\",\n    \"assigneeId\": null,\n    \"creatorId\": \"ef0a4221-abbc-41d9-aa13-0710ecf0a97d\",\n    \"dueDate\": \"2026-04-10T00:00:00.000Z\",\n    \"createdAt\": \"2026-04-10T16:08:48.789Z\",\n    \"updatedAt\": \"2026-04-10T16:14:08.897Z\",\n    \"assignee\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete task",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "DNT",
+                "value": "1"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              },
+              {
+                "key": "Sec-Fetch-Dest",
+                "value": "empty"
+              },
+              {
+                "key": "Sec-Fetch-Mode",
+                "value": "cors"
+              },
+              {
+                "key": "Sec-Fetch-Site",
+                "value": "same-site"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+              },
+              {
+                "key": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+              },
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/v1/tasks/5579ca42-d7b4-46e8-8684-9c0b79394f8a",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "tasks",
+                "5579ca42-d7b4-46e8-8684-9c0b79394f8a"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Delete task",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json, text/plain, */*"
+                  },
+                  {
+                    "key": "Accept-Language",
+                    "value": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7,bn;q=0.6,ta;q=0.5"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlZjBhNDIyMS1hYmJjLTQxZDktYWExMy0wNzEwZWNmMGE5N2QiLCJlbWFpbCI6InRlc3RBbHRlcm5hdGVAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzU4MzYwNTQsImV4cCI6MTc3NTkyMjQ1NH0.bweSkuiUxu5Co7yEb4ejWlTsUkHzmM8lTPG2lYVJkfo"
+                  },
+                  {
+                    "key": "Connection",
+                    "value": "keep-alive"
+                  },
+                  {
+                    "key": "DNT",
+                    "value": "1"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Referer",
+                    "value": "http://localhost:5173/"
+                  },
+                  {
+                    "key": "Sec-Fetch-Dest",
+                    "value": "empty"
+                  },
+                  {
+                    "key": "Sec-Fetch-Mode",
+                    "value": "cors"
+                  },
+                  {
+                    "key": "Sec-Fetch-Site",
+                    "value": "same-site"
+                  },
+                  {
+                    "key": "User-Agent",
+                    "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+                  },
+                  {
+                    "key": "sec-ch-ua",
+                    "value": "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""
+                  },
+                  {
+                    "key": "sec-ch-ua-mobile",
+                    "value": "?0"
+                  },
+                  {
+                    "key": "sec-ch-ua-platform",
+                    "value": "\"macOS\""
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:8000/api/v1/tasks/5579ca42-d7b4-46e8-8684-9c0b79394f8a",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "tasks",
+                    "5579ca42-d7b4-46e8-8684-9c0b79394f8a"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "51"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"33-1NDJMBnhMFIY58WXBIuGb6dfDnI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 10 Apr 2026 16:15:30 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Task deleted successfully\",\n    \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
